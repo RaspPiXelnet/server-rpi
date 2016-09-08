@@ -46,14 +46,17 @@ module.exports.routes = {
   *                                                                          *
   ***************************************************************************/
 
-  'GET /milight/init': 'MilightController.init',
-  'GET /on': 'MilightController.on',
-  'GET /off': 'MilightController.off',
-  'GET /color/text/:color': 'MilightController.changeColorText',
-  'GET /color/hue/:hue': 'MilightController.changeColorHue',
-  'GET /brightness/:percent': 'MilightController.setBrightness',
+  // Test
   'GET /cron/:date': 'MilightController.addCron',
   'GET /googlecal': 'MilightController.getGoogleCal',
-  'GET /test/weather': 'Weather.test'
+  'GET /test/weather': 'Weather.test',
+
+  // Milight
+  'GET /milight/init': 'MilightController.init',
+  'GET /milight/on': 'MilightController.on',
+  'GET /milight/off': 'MilightController.off',
+  'GET /milight/color/text/:color': 'MilightController.changeColorText',
+  'GET /milight/color/hue/:hue': 'MilightController.changeColorHue',
+  'GET /milight/brightness/:percent': 'MilightController.setBrightness'
 
 };

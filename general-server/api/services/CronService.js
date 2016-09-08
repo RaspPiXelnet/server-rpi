@@ -3,7 +3,14 @@ var CronJob = require('cron').CronJob;
 var Cron = {
   timeZone: 'Europe/Paris',
 
-  addCron: function (date, color, options, cb) {
+  addCron: function (date, actionStart, actionEnd, startNow, cb) {
+    sails.log(date);
+    // Création de la CRON
+    var job = new CronJob(date, actionStart, actionEnd, startNow, this.timeZone);
+    cb(job);
+  },
+
+  addCronMilight: function (date, color, options, cb) {
     // Traitement des options
     sails.log(date);
     sails.log(color);
