@@ -1,3 +1,5 @@
 general-server/config/google.js
 general-server/config/rtorrent.js
 general-server/config/rpiApp.js
+
+pm2.json
