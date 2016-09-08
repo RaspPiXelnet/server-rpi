@@ -21,15 +21,17 @@ module.exports = {
 
   on: function (req, res) {
     MilightService.init(function (box) {
-      MilightService.on(box, 'all');
-      res.json({message: 'Light ON'});
+      MilightService.on(box, 'all', function () {
+        res.json({message: 'Light ON'});
+      });
     });
   },
 
   off: function (req, res) {
     MilightService.init(function (box) {
-      MilightService.off(box, 'all');
-      res.json({message: 'Light OFF'});
+      MilightService.off(box, 'all', function () {
+        res.json({message: 'Light OFF'});
+      });
     });
   },
 

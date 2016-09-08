@@ -1,6 +1,6 @@
 var Milight = {
   box: {}, // Initilisation d'un objet vide
-  ip: '10.10.100.254', // Adresse IP du serveur Milight (par defaut: '10.10.100.254')
+  ip: sails.config.rpiApp.milight.host, // Adresse IP du serveur Milight (par defaut: '10.10.100.254')
 
   init: function (cb) {
     if (typeof(this.box.command) !== 'undefined') {
@@ -22,16 +22,18 @@ var Milight = {
     }
   },
 
-  on: function (box, zone) {
+  on: function (box, zone, cb) {
     this.getZone(zone, function (z) {
       box.command(MilightCommandsService.rgbw.on(z));
+      cb()
     });
   },
 
-  off: function (box, zone) {
+  off: function (box, zone, cb) {
     this.getZone(zone, function (z) {
       box.command(MilightCommandsService.rgbw.off(z));
     });
+    cb()
   },
 
   color: function (box, zone, hue, cb) {

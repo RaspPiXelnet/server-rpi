@@ -1,0 +1,28 @@
+<div class="container">
+
+  <div>
+    <x-navbar />
+  </div>
+
+  <div class="jumbotron text-center">
+
+    <label for="brightness">Init</label><br/>
+    <button ng-click="milightColor.on()">ON</button><br/>
+    <button ng-click="milightColor.off()">OFF</button><br/>
+
+    <label for="brightness">Color</label><br/>
+    <button ng-click="milightColor.red()">RED</button><br/>
+    <button ng-click="milightColor.blue()">BLUE</button><br/>
+    <button ng-click="milightColor.green()">GREEN</button><br/>
+    <button ng-click="milightColor.yellow()">YELLOW</button><br/>
+    <button ng-click="milightColor.white()">WHITE</button><br/>
+
+    <label for="brightness">Brightness</label>
+    <slider ng-model="milightColor.brightness" min="0" step="10" max="100" value="milightColor.brightness"></slider>
+    <input id="brightness" type="text" ng-model="milightColor.brightness" ng-disabled />
+    <button ng-click="milightColor.changeBrightness()">APPLY</button>
+
+  </div>
+
+
+</div>

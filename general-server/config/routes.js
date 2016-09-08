@@ -34,7 +34,7 @@ module.exports.routes = {
 
   '/': {
     view: 'homepage'
-  }
+  },
 
   /***************************************************************************
   *                                                                          *
@@ -45,5 +45,15 @@ module.exports.routes = {
   * for configuration options and examples.                                  *
   *                                                                          *
   ***************************************************************************/
+
+  'GET /milight/init': 'MilightController.init',
+  'GET /on': 'MilightController.on',
+  'GET /off': 'MilightController.off',
+  'GET /color/text/:color': 'MilightController.changeColorText',
+  'GET /color/hue/:hue': 'MilightController.changeColorHue',
+  'GET /brightness/:percent': 'MilightController.setBrightness',
+  'GET /cron/:date': 'MilightController.addCron',
+  'GET /googlecal': 'MilightController.getGoogleCal',
+  'GET /test/weather': 'Weather.test'
 
 };
