@@ -67,7 +67,7 @@ module.exports = {
             sails.log.error(new Error(weather.httpResponse));
           } else {
             // On ajoute une CRON pour l'allumage de l'éclairage quand le soleil commence à se coucher
-            var sunset = new Date(weather.sys.sunset);
+            var sunset = new Date(weather.data.sys.sunset);
             Weather.sunset(sunset, function (job) {
               sails.log('Programming CRON `sunset` to ' + sunset + '.');
             });
