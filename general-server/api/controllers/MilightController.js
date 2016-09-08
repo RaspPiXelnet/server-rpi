@@ -10,7 +10,7 @@ var Weather = {
   sunset: function (date, cb) {
     CronService(date, function () {
       // on Tick
-      sails.log.info('Start CRON `sunset`.');
+      sails.log('Start CRON `sunset`.');
       MilightService.init(function (box) {
         MilightService.on(box, 'all', function () {
           setTimeout(function () {
@@ -19,7 +19,7 @@ var Weather = {
               // Programme que l'éclairage augmente en intensité 30 min après.
               var newDateObj = new Date(date.getTime() + 1800000);
               CronService(date, function () {
-                sails.log.info('Start CRON `sunset` (Increased intensity).');
+                sails.log('Start CRON `sunset` (Increased intensity).');
                 MilightService.init(function (box) {
                   setTimeout(function () {
                     MilightService.brightness(box, 'all', '40', function () {
@@ -29,7 +29,7 @@ var Weather = {
                 });
               }, function () {
                 // on Complete
-                sails.log.info('Increase in light intensity.');
+                sails.log('Increase in light intensity.');
               }, true, function () {
                 // then
               });
@@ -41,7 +41,7 @@ var Weather = {
       });
     }, function () {
       // on Complete
-      sails.log.info('Lighting launched.');
+      sails.log('Lighting launched.');
     }, true, function (job) {
       // then
       cb(job);
@@ -60,7 +60,7 @@ module.exports = {
       // Définition d'une CRON qui va récupérer les informations de météo
       CronService.addCron('10 00 00 * * *', function () {
         // on Tick
-        sails.log.info('Start CRON `OpenWeatherMap Service - getCurrent`.');
+        sails.log('Start CRON `OpenWeatherMap Service - getCurrent`.');
         OpenWeatherMapService.getCurrent(function (weather) {
           if (weather.err) {
             sails.log.error(new Error(weather.err));
@@ -69,16 +69,16 @@ module.exports = {
             // On ajoute une CRON pour l'allumage de l'éclairage quand le soleil commence à se coucher
             var sunset = new Date(weather.sys.sunset);
             Weather.sunset(sunset, function (job) {
-              sails.log.info('Programming CRON `sunset` to ' + sunset + '.');
+              sails.log('Programming CRON `sunset` to ' + sunset + '.');
             });
           }
         })
       }, function () {
         // on Complete
-        sails.log.info('Recovery of complete weather.');
+        sails.log('Recovery of complete weather.');
       }, true, function (job) {
         // then
-        sails.log.info('Programming CRON `OpenWeatherMap Service - getCurrent` every day at 0:10.');
+        sails.log('Programming CRON `OpenWeatherMap Service - getCurrent` every day at 0:10.');
       });
 
       // End of initialization
