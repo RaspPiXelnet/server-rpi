@@ -11,7 +11,23 @@ var Weather = {
     CronService(date, function () {
       // on Tick
       sails.log('Start CRON `sunset`.');
-      MilightService.init(function (box) {
+      MilightEffectService.init([
+        {hue: '', brightness: '5', wait: '300', type: 'brightness'},
+        {hue: '', brightness: '10', wait: '300', type: 'brightness'},
+        {hue: '', brightness: '15', wait: '300', type: 'brightness'},
+        {hue: '', brightness: '20', wait: '300', type: 'brightness'},
+        {hue: '', brightness: '25', wait: '300', type: 'brightness'},
+        {hue: '', brightness: '30', wait: '300', type: 'brightness'},
+        {hue: '', brightness: '40', wait: '300', type: 'brightness'},
+        {hue: '', brightness: '50', wait: '300', type: 'brightness'},
+        {hue: '', brightness: '75', wait: '300', type: 'brightness'},
+        {hue: '', brightness: '100', wait: '300', type: 'brightness'}
+      ], function () {
+
+      });
+
+      /* Ancien fonctionnement */
+      /*MilightService.init(function (box) {
         MilightService.on(box, 'all', function () {
           setTimeout(function () {
             MilightService.brightness(box, 'all', '20', function () {
@@ -38,7 +54,7 @@ var Weather = {
             });
           }, 500);
         });
-      });
+      });*/
     }, function () {
       // on Complete
       sails.log('Lighting launched.');
