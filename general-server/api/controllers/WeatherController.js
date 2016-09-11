@@ -9,7 +9,7 @@ var CronJob = require('cron').CronJob;
 
 module.exports = {
   test: function (req, res) {
-    var date = new Date('2016-09-08T04:55:00');
+    var date = new Date('2016-09-12T03:55:00');
     var job = new CronJob(date, function () {
         // Appeler MilightService avec la couleur et les options définies
         MilightService.init(function (box) {
