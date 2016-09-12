@@ -13,16 +13,16 @@ var Weather = {
       // on Tick
       sails.log('Start CRON `sunset`.');
       MilightEffectService.init([
-        {hue: '', brightness: '5', wait: '300', type: 'brightness'},
-        {hue: '', brightness: '10', wait: '300', type: 'brightness'},
-        {hue: '', brightness: '15', wait: '300', type: 'brightness'},
-        {hue: '', brightness: '20', wait: '300', type: 'brightness'},
-        {hue: '', brightness: '25', wait: '300', type: 'brightness'},
-        {hue: '', brightness: '30', wait: '300', type: 'brightness'},
-        {hue: '', brightness: '40', wait: '300', type: 'brightness'},
-        {hue: '', brightness: '50', wait: '300', type: 'brightness'},
-        {hue: '', brightness: '75', wait: '300', type: 'brightness'},
-        {hue: '', brightness: '100', wait: '300', type: 'brightness'}
+        {hue: '', brightness: '5', wait: '300000', type: 'brightness'},
+        {hue: '', brightness: '10', wait: '300000', type: 'brightness'},
+        {hue: '', brightness: '15', wait: '300000', type: 'brightness'},
+        {hue: '', brightness: '20', wait: '300000', type: 'brightness'},
+        {hue: '', brightness: '25', wait: '300000', type: 'brightness'},
+        {hue: '', brightness: '30', wait: '300000', type: 'brightness'},
+        {hue: '', brightness: '40', wait: '300000', type: 'brightness'},
+        {hue: '', brightness: '50', wait: '300000', type: 'brightness'},
+        {hue: '', brightness: '75', wait: '300000', type: 'brightness'},
+        {hue: '', brightness: '100', wait: '300000', type: 'brightness'}
       ], function () {
 
       });
@@ -227,16 +227,16 @@ module.exports = {
       // on Tick
       sails.log('Start CRON `sunset`.');
       MilightEffectService.init([
-        {hue: '', brightness: '5', wait: '300', type: 'brightness'},
-        {hue: '', brightness: '10', wait: '300', type: 'brightness'},
-        {hue: '', brightness: '15', wait: '300', type: 'brightness'},
-        {hue: '', brightness: '20', wait: '300', type: 'brightness'},
-        {hue: '', brightness: '25', wait: '300', type: 'brightness'},
-        {hue: '', brightness: '30', wait: '300', type: 'brightness'},
-        {hue: '', brightness: '40', wait: '300', type: 'brightness'},
-        {hue: '', brightness: '50', wait: '300', type: 'brightness'},
-        {hue: '', brightness: '75', wait: '300', type: 'brightness'},
-        {hue: '', brightness: '100', wait: '300', type: 'brightness'}
+        {hue: '', brightness: '5', wait: '3000', type: 'brightness'},
+        {hue: '', brightness: '10', wait: '3000', type: 'brightness'},
+        {hue: '', brightness: '15', wait: '3000', type: 'brightness'},
+        {hue: '', brightness: '20', wait: '3000', type: 'brightness'},
+        {hue: '', brightness: '25', wait: '3000', type: 'brightness'},
+        {hue: '', brightness: '30', wait: '3000', type: 'brightness'},
+        {hue: '', brightness: '40', wait: '3000', type: 'brightness'},
+        {hue: '', brightness: '50', wait: '3000', type: 'brightness'},
+        {hue: '', brightness: '75', wait: '3000', type: 'brightness'},
+        {hue: '', brightness: '100', wait: '3000', type: 'brightness'}
       ], function () {
 
       });
