@@ -185,7 +185,7 @@ module.exports = {
       sails.log('Lighting launched.');
     }, true, function (job) {
       // then
-      Sails.log(date);
+      sails.log(date);
       res.json({date: date});
     });
   }
