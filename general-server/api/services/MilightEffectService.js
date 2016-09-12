@@ -16,9 +16,8 @@ var MilightEffect = {
   setEffect: function (box, cb) {
     sails.log(1);
     var that = this;
-    sails.log(this.effects);
     var effect = this.effects.shift();
-    sails.log(effect);
+    sails.log(effect.length);
     if(effect.length > 0) {
       sails.log(2);
       // Gestion des paramètres d'effet
