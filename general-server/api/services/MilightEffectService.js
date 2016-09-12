@@ -14,9 +14,11 @@ var MilightEffect = {
   },
 
   setEffect: function (box, cb) {
+    sails.log(1);
     var that = this;
     var effect = this.effects.shift();
     if(effect.length > 0) {
+      sails.log(2);
       // Gestion des paramètres d'effet
       var color = effect.hue;
       var brightness = effect.brightness;
@@ -24,6 +26,7 @@ var MilightEffect = {
       var type = effect.type;
       switch(type) {
         case 'color':
+          sails.log(3);
           MilightService.color(box, 'all', color, function () {
             setTimeout(function () {
               // On exécute de nouveau la fonction
@@ -32,6 +35,7 @@ var MilightEffect = {
           });
           break;
         case 'brightness':
+          sails.log(4);
           MilightService.brightness(box, 'all', brightness, function () {
             setTimeout(function () {
               // On exécute de nouveau la fonction
@@ -40,6 +44,7 @@ var MilightEffect = {
           });
           break;
         case 'whiteMode':
+          sails.log(5);
           MilightService.whiteMode(box, 'all', function () {
             setTimeout(function () {
               // On exécute de nouveau la fonction
@@ -48,6 +53,7 @@ var MilightEffect = {
           });
           break;
         case 'black':
+          sails.log(6);
           MilightService.off(box, 'all', function () {
             setTimeout(function () {
               // On exécute de nouveau la fonction
