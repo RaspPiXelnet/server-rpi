@@ -17,6 +17,8 @@ var MilightEffect = {
     sails.log(1);
     var that = this;
     var effect = this.effects.shift();
+    sails.log(effect);
+    sails.log(effect.type);
     if(typeof(effect.type) !== 'undefined') {
       sails.log(2);
       // Gestion des paramètres d'effet
