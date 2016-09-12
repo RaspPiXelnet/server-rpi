@@ -161,7 +161,7 @@ module.exports = {
   },
 
   testSunset: function (req, res) {
-    var date = new Date('2016-09-12T19:05:00');
+    var date = new Date('2016-09-12T19:10:00');
     CronService.addCron(date, function () {
       // on Tick
       sails.log('Start CRON `sunset`.');
