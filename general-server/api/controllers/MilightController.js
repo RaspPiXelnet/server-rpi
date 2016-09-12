@@ -6,6 +6,66 @@
  */
 var init = null;
 
+
+var Weather = {
+  sunset: function (date, cb) {
+    CronService.addCron(date, function () {
+      // on Tick
+      sails.log('Start CRON `sunset`.');
+      MilightEffectService.init([
+        {hue: '', brightness: '5', wait: '300', type: 'brightness'},
+        {hue: '', brightness: '10', wait: '300', type: 'brightness'},
+        {hue: '', brightness: '15', wait: '300', type: 'brightness'},
+        {hue: '', brightness: '20', wait: '300', type: 'brightness'},
+        {hue: '', brightness: '25', wait: '300', type: 'brightness'},
+        {hue: '', brightness: '30', wait: '300', type: 'brightness'},
+        {hue: '', brightness: '40', wait: '300', type: 'brightness'},
+        {hue: '', brightness: '50', wait: '300', type: 'brightness'},
+        {hue: '', brightness: '75', wait: '300', type: 'brightness'},
+        {hue: '', brightness: '100', wait: '300', type: 'brightness'}
+      ], function () {
+
+      });
+
+      /* Ancien fonctionnement */
+      /*MilightService.init(function (box) {
+       MilightService.on(box, 'all', function () {
+       setTimeout(function () {
+       MilightService.brightness(box, 'all', '20', function () {
+
+       // Programme que l'éclairage augmente en intensité 30 min après.
+       var newDateObj = new Date(date.getTime() + 1800000);
+       CronService(date, function () {
+       sails.log('Start CRON `sunset` (Increased intensity).');
+       MilightService.init(function (box) {
+       setTimeout(function () {
+       MilightService.brightness(box, 'all', '40', function () {
+
+       });
+       }, 500);
+       });
+       }, function () {
+       // on Complete
+       sails.log('Increase in light intensity.');
+       }, true, function () {
+       // then
+       });
+       // End: 30 min
+
+       });
+       }, 500);
+       });
+       });*/
+    }, function () {
+      // on Complete
+      sails.log('Lighting launched.');
+    }, true, function (job) {
+      // then
+      cb(job);
+    });
+  }
+};
+
 module.exports = {
 
   init: function (req, res) {
@@ -188,66 +248,6 @@ module.exports = {
       // then
       sails.log(date);
       res.json({date: date});
-    });
-  }
-};
-
-
-var Weather = {
-  sunset: function (date, cb) {
-    CronService.addCron(date, function () {
-      // on Tick
-      sails.log('Start CRON `sunset`.');
-      MilightEffectService.init([
-        {hue: '', brightness: '5', wait: '300', type: 'brightness'},
-        {hue: '', brightness: '10', wait: '300', type: 'brightness'},
-        {hue: '', brightness: '15', wait: '300', type: 'brightness'},
-        {hue: '', brightness: '20', wait: '300', type: 'brightness'},
-        {hue: '', brightness: '25', wait: '300', type: 'brightness'},
-        {hue: '', brightness: '30', wait: '300', type: 'brightness'},
-        {hue: '', brightness: '40', wait: '300', type: 'brightness'},
-        {hue: '', brightness: '50', wait: '300', type: 'brightness'},
-        {hue: '', brightness: '75', wait: '300', type: 'brightness'},
-        {hue: '', brightness: '100', wait: '300', type: 'brightness'}
-      ], function () {
-
-      });
-
-      /* Ancien fonctionnement */
-      /*MilightService.init(function (box) {
-       MilightService.on(box, 'all', function () {
-       setTimeout(function () {
-       MilightService.brightness(box, 'all', '20', function () {
-
-       // Programme que l'éclairage augmente en intensité 30 min après.
-       var newDateObj = new Date(date.getTime() + 1800000);
-       CronService(date, function () {
-       sails.log('Start CRON `sunset` (Increased intensity).');
-       MilightService.init(function (box) {
-       setTimeout(function () {
-       MilightService.brightness(box, 'all', '40', function () {
-
-       });
-       }, 500);
-       });
-       }, function () {
-       // on Complete
-       sails.log('Increase in light intensity.');
-       }, true, function () {
-       // then
-       });
-       // End: 30 min
-
-       });
-       }, 500);
-       });
-       });*/
-    }, function () {
-      // on Complete
-      sails.log('Lighting launched.');
-    }, true, function (job) {
-      // then
-      cb(job);
     });
   }
 };

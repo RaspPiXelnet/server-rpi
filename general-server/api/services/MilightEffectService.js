@@ -3,16 +3,18 @@ var MilightEffect = {
   effects: {},
 
   init: function (effects, cb) {
+    var that = this;
     this.effects = effects;
 
     MilightService.init(function (box) {
       setTimeout(function() {
-        this.setEffect(box, cb);
+        that.setEffect(box, cb);
       }, 100);
     });
   },
 
   setEffect: function (box, cb) {
+    var that = this;
     var effect = this.effects.shift();
     if(effect.length > 0) {
       // Gestion des paramètres d'effet
@@ -25,7 +27,7 @@ var MilightEffect = {
           MilightService.color(box, 'all', color, function () {
             setTimeout(function () {
               // On exécute de nouveau la fonction
-              this.setEffect(box, cb);
+              that.setEffect(box, cb);
             }, wait);
           });
           break;
@@ -33,7 +35,7 @@ var MilightEffect = {
           MilightService.brightness(box, 'all', brightness, function () {
             setTimeout(function () {
               // On exécute de nouveau la fonction
-              this.setEffect(box, cb);
+              that.setEffect(box, cb);
             }, wait);
           });
           break;
@@ -41,7 +43,7 @@ var MilightEffect = {
           MilightService.whiteMode(box, 'all', function () {
             setTimeout(function () {
               // On exécute de nouveau la fonction
-              this.setEffect(box, cb);
+              that.setEffect(box, cb);
             }, wait);
           });
           break;
@@ -49,7 +51,7 @@ var MilightEffect = {
           MilightService.off(box, 'all', function () {
             setTimeout(function () {
               // On exécute de nouveau la fonction
-              this.setEffect(box, cb);
+              that.setEffect(box, cb);
             }, wait);
           });
           break;
