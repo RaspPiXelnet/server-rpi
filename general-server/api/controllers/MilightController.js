@@ -217,5 +217,13 @@ module.exports = {
         });
       });
     });
+  },
+
+  testSunset: function (req, res) {
+    var date = new Date('2016-09-12T19:05:00');
+    Weather.sunset(date, function () {
+      Sails.log(date);
+      res.json({date: date});
+    });
   }
 };

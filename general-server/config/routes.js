@@ -50,6 +50,7 @@ module.exports.routes = {
   'GET /cron/:date': 'MilightController.addCron',
   'GET /googlecal': 'MilightController.getGoogleCal',
   'GET /test/weather': 'Weather.test',
+  'GET /test/sunset': 'MilightController.testSunset',
 
   // Milight
   'GET /milight/init': 'MilightController.init',
