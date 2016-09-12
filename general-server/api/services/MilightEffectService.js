@@ -17,8 +17,7 @@ var MilightEffect = {
     sails.log(1);
     var that = this;
     var effect = this.effects.shift();
-    sails.log(effect.length);
-    if(effect.length > 0) {
+    if(typeof(effect.type) !== 'undefined') {
       sails.log(2);
       // Gestion des paramètres d'effet
       var color = effect.hue;
