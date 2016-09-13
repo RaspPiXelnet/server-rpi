@@ -85,6 +85,7 @@ module.exports = {
           } else {
             // On ajoute une CRON pour l'allumage de l'éclairage quand le soleil commence à se coucher
             var sunset = new Date(weather.data.sys.sunset);
+            sunset.setSeconds(sunset.getSeconds() - 1800);
             Weather.sunset(sunset, function (job) {
               sails.log('Programming CRON `sunset` to ' + sunset + '.');
             });
@@ -220,34 +221,4 @@ module.exports = {
     });
   },
 
-  testSunset: function (req, res) {
-    var date = new Date();
-    date.setSeconds(date.getSeconds() + 30);
-    CronService.addCron(date, function () {
-      // on Tick
-      sails.log('Start CRON `sunset`.');
-      MilightEffectService.init([
-        {hue: '', brightness: '5', wait: '3000', type: 'brightness'},
-        {hue: '', brightness: '10', wait: '3000', type: 'brightness'},
-        {hue: '', brightness: '15', wait: '3000', type: 'brightness'},
-        {hue: '', brightness: '20', wait: '3000', type: 'brightness'},
-        {hue: '', brightness: '25', wait: '3000', type: 'brightness'},
-        {hue: '', brightness: '30', wait: '3000', type: 'brightness'},
-        {hue: '', brightness: '40', wait: '3000', type: 'brightness'},
-        {hue: '', brightness: '50', wait: '3000', type: 'brightness'},
-        {hue: '', brightness: '75', wait: '3000', type: 'brightness'},
-        {hue: '', brightness: '100', wait: '3000', type: 'brightness'}
-      ], function () {
-
-      });
-
-    }, function () {
-      // on Complete
-      sails.log('Lighting launched.');
-    }, true, function (job) {
-      // then
-      sails.log(date);
-      res.json({date: date});
-    });
-  }
 };
