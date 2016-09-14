@@ -72,33 +72,33 @@ module.exports = {
     if (init == null) {
       // Définition d'une CRON qui va vérifier et récupérer les évènements Google pour la journée
       /*CronService.addCron('12 00 00 * * *', function () {
-        // on Tick
-        sails.log('Start CRON `Google Agenda Service`.');
-        CalendarService.getItems(function (items) {
-          sails.log(items);
-          // Parcourir le tableau d'items
-          items.forEach(function (item) {
-            CalendarService.getInfos(item, function (infos) {
-              if(infos.err !== false) {
-                sails.log({message: "Ajout d'un évènement pour : (" + infos.date + ")."});
-              } else {
-                // Modification dynamique de la couleur et des options en fonction du texte de l'évènement
-                ParseEvent(infos.text, function (hue, options) {
-                  CronService.addCronMilight(infos.date, hue, options, function () {
-                    sails.log({message: "Ajout d'un évènement pour : (" + infos.date + ")."});
-                  });
-                });
-              }
-            });
-          });
-        });
-      }, function () {
-        // on Complete
-        sails.log('Recovery of complete weather.');
-      }, true, function (job) {
-        // then
-        sails.log('Programming CRON `OpenWeatherMap Service - getCurrent` every day at 0:10.');
-      });*/
+       // on Tick
+       sails.log('Start CRON `Google Agenda Service`.');
+       CalendarService.getItems(function (items) {
+       sails.log(items);
+       // Parcourir le tableau d'items
+       items.forEach(function (item) {
+       CalendarService.getInfos(item, function (infos) {
+       if(infos.err !== false) {
+       sails.log({message: "Ajout d'un évènement pour : (" + infos.date + ")."});
+       } else {
+       // Modification dynamique de la couleur et des options en fonction du texte de l'évènement
+       ParseEvent(infos.text, function (hue, options) {
+       CronService.addCronMilight(infos.date, hue, options, function () {
+       sails.log({message: "Ajout d'un évènement pour : (" + infos.date + ")."});
+       });
+       });
+       }
+       });
+       });
+       });
+       }, function () {
+       // on Complete
+       sails.log('Recovery of complete weather.');
+       }, true, function (job) {
+       // then
+       sails.log('Programming CRON `OpenWeatherMap Service - getCurrent` every day at 0:10.');
+       });*/
 
       // Définition d'une CRON qui va vérifier et récupérer les évènements Google toutes les 5 minutes
 
@@ -248,15 +248,18 @@ module.exports = {
     CalendarService.getItems(function (items) {
       sails.log(items);
       // Parcourir le tableau d'items
-      CalendarService.getInfos(items[0], function (infos) {
-        // Modification dynamique de la couleur et des options en fonction du texte de l'évènement
-        ParseEvent(infos.text, function (hue, options) {
-          CronService.addCronMilight(infos.date, hue, options, function () {
-            return res.json({message: "Ajout d'un évènement pour : (" + infos.date + ")."});
+      items.forEach(function (item) {
+        CalendarService.getInfos(item, function (infos) {
+          // Modification dynamique de la couleur et des options en fonction du texte de l'évènement
+          ParseEvent(infos.text, function (hue, options) {
+            CronService.addCronMilight(infos.date, hue, options, function () {
+              sails.log({message: "Ajout d'un évènement pour : (" + infos.date + ")."});
+            });
           });
         });
       });
     });
+    return res.json({message: "Ajout d'évènements Google Calendar."});
   }
 
 }
