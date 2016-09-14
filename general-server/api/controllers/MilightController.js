@@ -207,7 +207,7 @@ module.exports = {
         var sunset = new Date(weather.data.sys.sunset * 1000);
         sunset.setSeconds(sunset.getSeconds() - 1800);
         Weather.sunset(sunset, function (job) {
-          var date = sunset.getDate() + '/' + sunset.getMonth() + '/' + sunset.getFullYear() + ' ' + sunset.getHours() + ':' + sunset.getMinutes();
+          var date = sunset.getDate() + '/' + (sunset.getMonth() + 1) + '/' + sunset.getFullYear() + ' ' + sunset.getHours() + ':' + sunset.getMinutes();
           sails.log('Programming CRON `sunset` to ' + date + '.');
         });
       }
