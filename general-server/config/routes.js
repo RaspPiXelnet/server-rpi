@@ -58,6 +58,9 @@ module.exports.routes = {
   'GET /milight/off': 'MilightController.off',
   'GET /milight/color/text/:color': 'MilightController.changeColorText',
   'GET /milight/color/hue/:hue': 'MilightController.changeColorHue',
-  'GET /milight/brightness/:percent': 'MilightController.setBrightness'
+  'GET /milight/brightness/:percent': 'MilightController.setBrightness',
+
+  // Météo
+  'GET /weather/cron-force': 'MilightController.cronForceWeather'
 
 };

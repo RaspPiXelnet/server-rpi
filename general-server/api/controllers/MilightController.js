@@ -84,7 +84,7 @@ module.exports = {
             sails.log.error(new Error(weather.httpResponse));
           } else {
             // On ajoute une CRON pour l'allumage de l'éclairage quand le soleil commence à se coucher
-            var sunset = new Date(weather.data.sys.sunset);
+            var sunset = new Date(weather.data.sys.sunset * 1000);
             sunset.setSeconds(sunset.getSeconds() - 1800);
             Weather.sunset(sunset, function (job) {
               sails.log('Programming CRON `sunset` to ' + sunset + '.');
@@ -197,12 +197,20 @@ module.exports = {
     });
   },
 
-  addCron: function (req, res) {
-    var date = new Date(req.param('date'));
-    var hue = 200;
-    var options = {};
-    CronService.addCronMilight(date, hue, options, function () {
-      return res.json({message: "Ajout d'un évènement pour : (" + date + ")."});
+  cronForceWeather: function (req, res) {
+    OpenWeatherMapService.getCurrent(function (weather) {
+      if (weather.err) {
+        sails.log.error(new Error(weather.err));
+        sails.log.error(new Error(weather.httpResponse));
+      } else {
+        // On ajoute une CRON pour l'allumage de l'éclairage quand le soleil commence à se coucher
+        var sunset = new Date(weather.data.sys.sunset * 1000);
+        sunset.setSeconds(sunset.getSeconds() - 1800);
+        Weather.sunset(sunset, function (job) {
+          var date = sunset.getDate() + '/' + sunset.getMonth() + '/' + sunset.getFullYear() + ' ' + sunset.getHours() + ':' + sunset.getMinutes();
+          sails.log('Programming CRON `sunset` to ' + date + '.');
+        });
+      }
     });
   },
 
@@ -219,6 +227,8 @@ module.exports = {
         });
       });
     });
-  },
+  }
+  ,
 
-};
+}
+;
