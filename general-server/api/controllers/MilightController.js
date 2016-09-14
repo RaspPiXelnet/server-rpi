@@ -209,6 +209,7 @@ module.exports = {
         Weather.sunset(sunset, function (job) {
           var date = sunset.getDate() + '/' + (sunset.getMonth() + 1) + '/' + sunset.getFullYear() + ' ' + sunset.getHours() + ':' + sunset.getMinutes();
           sails.log('Programming CRON `sunset` to ' + date + '.');
+          res.json({message: 'Cron Force Weather !!!'})
         });
       }
     });
