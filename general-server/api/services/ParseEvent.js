@@ -4,16 +4,16 @@ var ParseEvent = function(text, cb) {
     case 'Reveil':
     case 'réveil':
     case 'reveil':
-      cb(-1, {style: ['fadein-slow']});
+      cb(-1, {type: 'reveil', style: ['fadein-slow']});
       break;
     case 'Coucher':
     case 'coucher':
     case 'Dormir':
     case 'dormir':
-      cb(-1, {style: ['fadeout', 'fadeout', 'fadeout']});
+      cb(-1, {type: 'coucher', style: ['fadeout', 'fadeout', 'fadeout']});
     default:
       HueService.getHue('red', function (hue) {
-        cb(hue, {style: 'blink'});
+        cb(hue, {type: 'default',style: 'blink'});
       });
       break;
   }

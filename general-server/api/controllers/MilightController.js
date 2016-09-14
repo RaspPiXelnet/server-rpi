@@ -66,6 +66,35 @@ var Weather = {
   }
 };
 
+var calendar = {
+  reveil: function (date, cb) {
+    CronService.addCron(date, function () {
+      // on Tick
+      sails.log('Start CRON `reveil`.');
+      MilightEffectService.init([
+        {hue: '', brightness: '5', wait: '180000', type: 'brightness'},
+        {hue: '', brightness: '10', wait: '180000', type: 'brightness'},
+        {hue: '', brightness: '15', wait: '180000', type: 'brightness'},
+        {hue: '', brightness: '20', wait: '180000', type: 'brightness'},
+        {hue: '', brightness: '25', wait: '180000', type: 'brightness'},
+        {hue: '', brightness: '30', wait: '180000', type: 'brightness'},
+        {hue: '', brightness: '40', wait: '180000', type: 'brightness'},
+        {hue: '', brightness: '50', wait: '180000', type: 'brightness'},
+        {hue: '', brightness: '75', wait: '180000', type: 'brightness'},
+        {hue: '', brightness: '100', wait: '180000', type: 'brightness'}
+      ], function () {
+
+      });
+    }, function () {
+      // on Complete
+      sails.log('Lighting launched.');
+    }, true, function (job) {
+      // then
+      cb(job);
+    });
+  }
+};
+
 module.exports = {
 
   init: function (req, res) {
@@ -234,7 +263,7 @@ module.exports = {
       } else {
         // On ajoute une CRON pour l'allumage de l'éclairage quand le soleil commence à se coucher
         var sunset = new Date(weather.data.sys.sunset * 1000);
-        sunset.setSeconds(sunset.getSeconds() - 1800);
+        sunset.setSeconds(sunset.getSeconds() - 5400);
         Weather.sunset(sunset, function (job) {
           var date = sunset.getDate() + '/' + (sunset.getMonth() + 1) + '/' + sunset.getFullYear() + ' ' + sunset.getHours() + ':' + sunset.getMinutes();
           sails.log('Programming CRON `sunset` to ' + date + '.');
@@ -252,9 +281,24 @@ module.exports = {
         CalendarService.getInfos(item, function (infos) {
           // Modification dynamique de la couleur et des options en fonction du texte de l'évènement
           ParseEvent(infos.text, function (hue, options) {
-            CronService.addCronMilight(infos.date, hue, options, function () {
-              sails.log({message: "Ajout d'un évènement pour : (" + infos.date + ")."});
-            });
+            switch (options.type) {
+              case 'reveil':
+                calendar.reveil(infos.date, function () {
+                  sails.log({message: "Ajout d'un évènement `Réveil` pour : (" + infos.date + ")."});
+                });
+                break;
+              case 'coucher':
+                sails.log({message: "Ajout d'un évènement `Coucher` pour : (" + infos.date + ")."});
+                break;
+              default:
+                sails.log({message: "Ajout d'un évènement `Défaut` pour : (" + infos.date + ")."});
+                break;
+            }
+
+
+            /*CronService.addCronMilight(infos.date, hue, options, function () {
+             sails.log({message: "Ajout d'un évènement pour : (" + infos.date + ")."});
+             });*/
           });
         });
       });
