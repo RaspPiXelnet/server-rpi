@@ -133,7 +133,7 @@ var calendar = {
       });
     }, function () {
       // on Complete
-      sails.log.verbose('Operations of CRON `bedDown` finished.');
+      sails.log.verbose('Operations of CRON `alarm` finished.');
     }, true, function (job) {
       // then
       cb(job);
@@ -298,6 +298,8 @@ module.exports = {
 
           var today = new Date();
           if(today.getDate() == infos.date.getDate() && today.getMonth() == infos.date.getMonth() && today.getFullYear() == infos.date.getFullYear()) {
+
+            sails.log(infos.text);
 
             // Modification dynamique de la couleur et des options en fonction du texte de l'évènement
             ParseEvent(infos.text, function (hue, options) {
