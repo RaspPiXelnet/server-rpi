@@ -1,8 +1,8 @@
 var Hue = {
-  getHue: function (color, cb) {
+  getHue: function (color) {
     switch(color) {
       case 'red':
-        cb(170)
+        return 170;
     }
   }
 };

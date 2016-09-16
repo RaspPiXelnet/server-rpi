@@ -9,6 +9,25 @@ module.exports = {
 
   attributes: {
 
+    type: {
+      type: 'string',
+      enum: ['color', 'brightness', 'black', 'whiteMode'],
+      required: true
+    },
+
+    zone: {
+      type: 'string',
+      required: true
+    },
+
+    brightness: {
+      type: 'integer'
+    },
+
+    color: {
+      type: 'integer'
+    }
+
   }
 };
 

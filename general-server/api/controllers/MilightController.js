@@ -96,7 +96,7 @@ var calendar = {
   alarm: function (date, cb) {
     CronService.addCron(date, function () {
       // on Tick
-      sails.log.verbose('Start CRON `bedDown`.');
+      sails.log.verbose('Start CRON `alarm`.');
       MilightEffectService.init([
         {hue: HueService.getHue('red'), brightness: '', wait: '100', type: 'color'},
         {hue: '', brightness: '100', wait: '10000', type: 'brightness'},
