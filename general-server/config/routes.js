@@ -61,6 +61,6 @@ module.exports.routes = {
   'GET /weather/cron-force': 'MilightController.cronForceWeather',
 
   // Google Calendar
-  'GET /google-calendar/cron-force': 'MilightController.getGoogleCal',
+  'GET /google-calendar/cron-force': 'MilightController.cronForceGoogleCalendar',
 
 };
