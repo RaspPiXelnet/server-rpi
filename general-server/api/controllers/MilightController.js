@@ -291,18 +291,16 @@ module.exports = {
 
   cronForceGoogleCalendar: function (req, res) {
     CalendarService.getItems(function (items) {
-      sails.log(items);
       // Parcourir le tableau d'items
       items.forEach(function (item) {
         CalendarService.getInfos(item, function (infos) {
 
           var today = new Date();
           if(today.getDate() == infos.date.getDate() && today.getMonth() == infos.date.getMonth() && today.getFullYear() == infos.date.getFullYear()) {
-
             sails.log.info(infos.text);
-
-            // Modification dynamique de la couleur et des options en fonction du texte de l'évènement
+            // Définition des CRON en fonction du texte de l'évènement
             ParseEvent(infos.text, function (hue, options) {
+              sails.log.info(options);
               switch (options.type) {
                 case 'awakening':
                   calendar.awakening(infos.date, function () {
