@@ -345,10 +345,8 @@ module.exports = {
 
           var today = new Date();
           if(today.getDate() == infos.date.getDate() && today.getMonth() == infos.date.getMonth() && today.getFullYear() == infos.date.getFullYear()) {
-            sails.log.info(infos.text);
             // Définition des CRON en fonction du texte de l'évènement
             ParseEvent(infos.text, function (hue, options) {
-              sails.log.info(options);
               switch (options.type) {
                 case 'awakening':
                   calendar.awakening(infos.date, function () {
