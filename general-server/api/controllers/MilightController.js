@@ -195,7 +195,7 @@ module.exports = {
         sails.log.silly('Google Calendar Events defined.');
       }, true, function (job) {
         // then
-        sails.log.verbose('CRON `Google Agenda Events` defined at 0:01 am.');
+        sails.log.verbose('CRON `Google Agenda Events` defined all the 5 minutes.');
       });
 
       // Définition d'une CRON qui va récupérer les informations de météo et programme l'allumage de l'éclairage au couché du soleil
