@@ -27,9 +27,10 @@ var MilightEffect = {
       // Ajoute en base l'état actuel de la lampe
       Milight.create({type: type, zone: 'all', brightness: parseInt(brightness), color: color}).exec(function (err, data){
         if (err) {
-          sails.log.error(new Error('Bad parameter on CREATE Milight model.'));
+          sails.log.error(err);
         }
-        sails.log.silly('New Milight entry: ', data.id);
+        sails.log.verbose('New Milight entry.');
+        sails.log.silly(data);
       });
 
       switch(type) {
