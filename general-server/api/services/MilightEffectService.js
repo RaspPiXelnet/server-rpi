@@ -16,12 +16,22 @@ var MilightEffect = {
   setEffect: function (box, cb) {
     var that = this;
     var effect = this.effects.shift();
+
     if(typeof(effect) !== 'undefined') {
       // Gestion des paramètres d'effet
       var color = effect.hue;
       var brightness = effect.brightness;
       var wait = effect.wait;
       var type = effect.type;
+
+      // Ajoute en base l'état actuel de la lampe
+      Milight.create({type: type, zone: 'all', brightness: parseInt(brightness), color: color}).exec(function (err, data){
+        if (err) {
+          sails.log.error(new Error('Bad parameter on CREATE Milight model.'));
+        }
+        sails.log.silly('New Milight entry: ', data.id);
+      });
+
       switch(type) {
         case 'color':
           MilightService.color(box, 'all', color, function () {
