@@ -148,7 +148,7 @@ module.exports = {
   init: function (req, res) {
     if (init == null) {
       // Définition d'une CRON qui va vérifier et récupérer les évènements Google pour la journée
-      CronService.addCron('*/12 * * * * *', function () {
+      CronService.addCron('0 */12 * * * *', function () {
         // on Tick
         sails.log.verbose('Start CRON `Google Agenda Events`.');
         CalendarService.getItems(function (items) {
