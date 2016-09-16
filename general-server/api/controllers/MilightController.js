@@ -57,7 +57,7 @@ var calendar = {
       });
     }, function () {
       // on Complete
-      sails.log.verbose('Operations of CRON `sunset` awakening.');
+      sails.log.verbose('Operations of CRON `awakening` finished.');
     }, true, function (job) {
       // then
       cb(job);
@@ -65,7 +65,79 @@ var calendar = {
   },
 
   bedDown: function (date, cb) {
-    cb();
+    CronService.addCron(date, function () {
+      // on Tick
+      sails.log.verbose('Start CRON `bedDown`.');
+      MilightEffectService.init([
+        {hue: '', brightness: '50', wait: '60000', type: 'brightness'},
+        {hue: '', brightness: '45', wait: '60000', type: 'brightness'},
+        {hue: '', brightness: '40', wait: '60000', type: 'brightness'},
+        {hue: '', brightness: '35', wait: '60000', type: 'brightness'},
+        {hue: '', brightness: '30', wait: '60000', type: 'brightness'},
+        {hue: '', brightness: '25', wait: '60000', type: 'brightness'},
+        {hue: '', brightness: '20', wait: '60000', type: 'brightness'},
+        {hue: '', brightness: '15', wait: '60000', type: 'brightness'},
+        {hue: '', brightness: '10', wait: '60000', type: 'brightness'},
+        {hue: '', brightness: '5', wait: '60000', type: 'brightness'},
+        {hue: '', brightness: '0', wait: '60000', type: 'brightness'}
+      ], function () {
+
+      });
+    }, function () {
+      // on Complete
+      sails.log.verbose('Operations of CRON `bedDown` finished.');
+    }, true, function (job) {
+      // then
+      cb(job);
+    });
+  },
+
+  alarm: function (date, cb) {
+    CronService.addCron(date, function () {
+      // on Tick
+      sails.log.verbose('Start CRON `bedDown`.');
+      MilightEffectService.init([
+        {hue: HueService.getHue('red'), brightness: '', wait: '100', type: 'color'},
+        {hue: '', brightness: '100', wait: '10000', type: 'brightness'},
+        {hue: '', brightness: '', wait: '10000', type: 'black'},
+        {hue: '', brightness: '100', wait: '10000', type: 'brightness'},
+        {hue: '', brightness: '', wait: '10000', type: 'black'},
+        {hue: '', brightness: '100', wait: '10000', type: 'brightness'},
+        {hue: '', brightness: '', wait: '10000', type: 'black'},
+        {hue: '', brightness: '100', wait: '10000', type: 'brightness'},
+        {hue: '', brightness: '', wait: '10000', type: 'black'},
+        {hue: '', brightness: '100', wait: '10000', type: 'brightness'},
+        {hue: '', brightness: '', wait: '10000', type: 'black'},
+        {hue: '', brightness: '100', wait: '10000', type: 'brightness'},
+        {hue: '', brightness: '', wait: '10000', type: 'black'},
+        {hue: '', brightness: '100', wait: '10000', type: 'brightness'},
+        {hue: '', brightness: '', wait: '10000', type: 'black'},
+        {hue: '', brightness: '100', wait: '10000', type: 'brightness'},
+        {hue: '', brightness: '', wait: '10000', type: 'black'},
+        {hue: '', brightness: '100', wait: '10000', type: 'brightness'},
+        {hue: '', brightness: '', wait: '10000', type: 'black'},
+        {hue: '', brightness: '100', wait: '10000', type: 'brightness'},
+        {hue: '', brightness: '', wait: '10000', type: 'black'},
+        {hue: '', brightness: '100', wait: '10000', type: 'brightness'},
+        {hue: '', brightness: '', wait: '10000', type: 'black'},
+        {hue: '', brightness: '100', wait: '10000', type: 'brightness'},
+        {hue: '', brightness: '', wait: '10000', type: 'black'},
+        {hue: '', brightness: '100', wait: '10000', type: 'brightness'},
+        {hue: '', brightness: '', wait: '10000', type: 'black'},
+        {hue: '', brightness: '100', wait: '10000', type: 'brightness'},
+        {hue: '', brightness: '', wait: '10000', type: 'black'},
+        {hue: '', brightness: '100', wait: '10000', type: 'brightness'},
+        {hue: '', brightness: '', wait: '10000', type: 'black'}
+      ], function () {
+
+      });
+    }, function () {
+      // on Complete
+      sails.log.verbose('Operations of CRON `bedDown` finished.');
+    }, true, function (job) {
+      // then
+      cb(job);
+    });
   }
 };
 
@@ -217,7 +289,7 @@ module.exports = {
     });
   },
 
-  getGoogleCal: function (req, res) {
+  cronForceGoogleCalendar: function (req, res) {
     CalendarService.getItems(function (items) {
       sails.log(items);
       // Parcourir le tableau d'items
@@ -225,14 +297,6 @@ module.exports = {
         CalendarService.getInfos(item, function (infos) {
 
           var today = new Date();
-
-          sails.log(today.getDate())
-          sails.log(infos.date.getDate())
-          sails.log(today.getMonth())
-          sails.log(infos.date.getMonth())
-          sails.log(today.getFullYear())
-          sails.log(infos.date.getFullYear())
-
           if(today.getDate() == infos.date.getDate() && today.getMonth() == infos.date.getMonth() && today.getFullYear() == infos.date.getFullYear()) {
 
             // Modification dynamique de la couleur et des options en fonction du texte de l'évènement
@@ -244,13 +308,17 @@ module.exports = {
                   });
                   break;
 
-                case 'bedDown': // coated
-                  sails.log.verbose('CRON `bedDown` defined on %s.', infos.date);
+                case 'bedDown':
+                  calendar.bedDown(infos.date, function () {
+                    sails.log.verbose('CRON `bedDown` defined on %s.', infos.date);
+                  });
                   break;
 
                 case 'alarm':
                 default:
-                  sails.log.verbose('CRON `alarm` defined on %s.', infos.date);
+                  calendar.alarm(infos.date, function () {
+                    sails.log.verbose('CRON `alarm` defined on %s.', infos.date);
+                  });
                   break;
 
               }

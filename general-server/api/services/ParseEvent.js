@@ -1,21 +1,25 @@
-var ParseEvent = function(text, cb) {
+var ParseEvent = function (text, cb) {
   switch (text) {
     case 'Réveil':
     case 'Reveil':
     case 'réveil':
     case 'reveil':
-      cb(-1, {type: 'awakening', style: ['fadein-slow']});
+      cb(-1, {type: 'awakening'});
       break;
+
     case 'Coucher':
     case 'coucher':
+    case 'Couché':
+    case 'couché':
     case 'Dormir':
     case 'dormir':
-      cb(-1, {type: 'bedDown', style: ['fadeout', 'fadeout', 'fadeout']});
-    default:
-      HueService.getHue('red', function (hue) {
-        cb(hue, {type: 'default',style: 'blink'});
-      });
+      cb(-1, {type: 'bedDown'});
       break;
+
+    default:
+      cb(-1, {type: 'alarm'});
+      break;
+
   }
 };
 

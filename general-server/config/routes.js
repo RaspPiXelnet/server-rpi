@@ -47,7 +47,7 @@ module.exports.routes = {
   ***************************************************************************/
 
   // Test
-  'GET /googlecal': 'MilightController.getGoogleCal',
+
 
   // Milight
   'GET /milight/init': 'MilightController.init',
@@ -58,6 +58,9 @@ module.exports.routes = {
   'GET /milight/brightness/:percent': 'MilightController.setBrightness',
 
   // Weather
-  'GET /weather/cron-force': 'MilightController.cronForceWeather'
+  'GET /weather/cron-force': 'MilightController.cronForceWeather',
+
+  // Google Calendar
+  'GET /google-calendar/cron-force': 'MilightController.getGoogleCal',
 
 };
