@@ -155,7 +155,7 @@ module.exports = {
         sails.log.verbose('Start CRON `OpenWeatherMap Service - getCurrent`.');
         OpenWeatherMapService.getCurrent(function (weather) {
           if (weather.err) {
-            sails.log.error(new Error(weather.err, 'general-server/api/controllers/MilightController.js', 84), weather.httpResponse);
+            sails.log.error(new Error(weather.err, 'general-server/api/controllers/MilightController.js', 156), weather.httpResponse);
           } else {
             // On ajoute une CRON pour l'allumage de l'éclairage quand le soleil commence à se coucher
             var sunset = new Date(weather.data.sys.sunset * 1000);
@@ -275,7 +275,7 @@ module.exports = {
   cronForceWeather: function (req, res) {
     OpenWeatherMapService.getCurrent(function (weather) {
       if (weather.err) {
-        sails.log.error(new Error(weather.err, 'general-server/api/controllers/MilightController.js', 204), weather.httpResponse);
+        sails.log.error(new Error(weather.err, 'general-server/api/controllers/MilightController.js', 276), weather.httpResponse);
       } else {
         // On ajoute une CRON pour l'allumage de l'éclairage quand le soleil commence à se coucher
         var sunset = new Date(weather.data.sys.sunset * 1000);
@@ -299,7 +299,7 @@ module.exports = {
           var today = new Date();
           if(today.getDate() == infos.date.getDate() && today.getMonth() == infos.date.getMonth() && today.getFullYear() == infos.date.getFullYear()) {
 
-            sails.log(infos.text);
+            sails.log.info(infos.text);
 
             // Modification dynamique de la couleur et des options en fonction du texte de l'évènement
             ParseEvent(infos.text, function (hue, options) {
