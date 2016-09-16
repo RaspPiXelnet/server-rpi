@@ -4,6 +4,10 @@ var ParseEvent = function (text, cb) {
     case 'Reveil':
     case 'réveil':
     case 'reveil':
+    case 'Réveil ':
+    case 'Reveil ':
+    case 'réveil ':
+    case 'reveil ':
       cb(-1, {type: 'awakening'});
       break;
 
@@ -13,6 +17,12 @@ var ParseEvent = function (text, cb) {
     case 'couché':
     case 'Dormir':
     case 'dormir':
+    case 'Coucher ':
+    case 'coucher ':
+    case 'Couché ':
+    case 'couché ':
+    case 'Dormir ':
+    case 'dormir ':
       cb(-1, {type: 'bedDown'});
       break;
 
