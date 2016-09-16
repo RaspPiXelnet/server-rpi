@@ -89,7 +89,7 @@ module.exports = {
             var sunset = new Date(weather.data.sys.sunset * 1000);
             sunset.setSeconds(sunset.getSeconds() - 1800);
             Weather.sunset(sunset, function (job) {
-              sails.log.verbose('CRON `sunset` defined to %d.', infos.date);
+              sails.log.verbose('CRON `sunset` defined on %d.', infos.date);
             });
           }
         })
@@ -98,7 +98,7 @@ module.exports = {
         sails.log.silly('Recovery of complete weather.');
       }, true, function (job) {
         // then
-        sails.log.verbose('CRON `OpenWeatherMap.getCurrent` defined to 0:10 am.');
+        sails.log.verbose('CRON `OpenWeatherMap.getCurrent` defined at 0:10 am.');
       });
       // END CRON WEATHER
 
@@ -210,7 +210,7 @@ module.exports = {
         sunset.setSeconds(sunset.getSeconds() - 5400);
         Weather.sunset(sunset, function (job) {
           var date = sunset.getDate() + '/' + (sunset.getMonth() + 1) + '/' + sunset.getFullYear() + ' ' + sunset.getHours() + ':' + sunset.getMinutes();
-          sails.log.verbose('CRON `sunset` defined to %s.', date);
+          sails.log.verbose('CRON `sunset` defined on %s.', date);
           res.json({message: 'Cron Force Weather !!!'});
         });
       }
@@ -228,30 +228,25 @@ module.exports = {
             switch (options.type) {
               case 'awakening':
                 calendar.awakening(infos.date, function () {
-                  sails.log.verbose('CRON `awakening` defined to %d.', infos.date);
+                  sails.log.verbose('CRON `awakening` defined on %s.', infos.date);
                 });
                 break;
 
               case 'bedDown': // coated
-                sails.log.verbose('CRON `bedDown` defined to %d.', infos.date);
+                sails.log.verbose('CRON `bedDown` defined on %s.', infos.date);
                 break;
 
               case 'alarm':
               default:
-                sails.log.verbose('CRON `alarm` defined to %d.', infos.date);
+                sails.log.verbose('CRON `alarm` defined on %s.', infos.date);
                 break;
 
             }
-
-
-            /*CronService.addCronMilight(infos.date, hue, options, function () {
-             sails.log({message: "Ajout d'un évènement pour : (" + infos.date + ")."});
-             });*/
           });
         });
       });
     });
-    return res.json({message: "Ajout d'évènements Google Calendar."});
+    return res.json({message: "Google Calendar events added."});
   }
 
 }
