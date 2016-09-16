@@ -146,13 +146,61 @@ module.exports = {
   init: function (req, res) {
     if (init == null) {
       // Définition d'une CRON qui va vérifier et récupérer les évènements Google pour la journée
+      CronService.addCron('01 00 00 * * *', function () {
+        // on Tick
+        sails.log.verbose('Start CRON `Google Agenda Events`.');
+        CalendarService.getItems(function (items) {
+          // Parcourir le tableau d'items
+          items.forEach(function (item) {
+            CalendarService.getInfos(item, function (infos) {
 
+              var today = new Date();
+              if(today.getDate() == infos.date.getDate() && today.getMonth() == infos.date.getMonth() && today.getFullYear() == infos.date.getFullYear()) {
+                sails.log.info(infos.text);
+                // Définition des CRON en fonction du texte de l'évènement
+                ParseEvent(infos.text, function (hue, options) {
+                  sails.log.info(options);
+                  switch (options.type) {
+                    case 'awakening':
+                      calendar.awakening(infos.date, function () {
+                        sails.log.verbose('CRON `awakening` defined on %s.', infos.date);
+                      });
+                      break;
+
+                    case 'bedDown':
+                      calendar.bedDown(infos.date, function () {
+                        sails.log.verbose('CRON `bedDown` defined on %s.', infos.date);
+                      });
+                      break;
+
+                    case 'alarm':
+                    default:
+                      calendar.alarm(infos.date, function () {
+                        sails.log.verbose('CRON `alarm` defined on %s.', infos.date);
+                      });
+                      break;
+
+                  }
+                });
+
+              }
+
+            });
+          });
+        });
+      }, function () {
+        // on Complete
+        sails.log.silly('Google Calendar Events defined.');
+      }, true, function (job) {
+        // then
+        sails.log.verbose('CRON `Google Agenda Events` defined at 0:01 am.');
+      });
       // Définition d'une CRON qui va vérifier et récupérer les évènements Google toutes les 5 minutes
 
-      // Définition d'une CRON qui va récupérer les informations de météo
+      // Définition d'une CRON qui va récupérer les informations de météo et programme l'allumage de l'éclairage au couché du soleil
       CronService.addCron('10 00 00 * * *', function () {
         // on Tick
-        sails.log.verbose('Start CRON `OpenWeatherMap Service - getCurrent`.');
+        sails.log.verbose('Start CRON `OpenWeatherMap`.');
         OpenWeatherMapService.getCurrent(function (weather) {
           if (weather.err) {
             sails.log.error(new Error(weather.err, 'general-server/api/controllers/MilightController.js', 156), weather.httpResponse);
