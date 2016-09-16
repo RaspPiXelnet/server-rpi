@@ -223,26 +223,33 @@ module.exports = {
       // Parcourir le tableau d'items
       items.forEach(function (item) {
         CalendarService.getInfos(item, function (infos) {
-          // Modification dynamique de la couleur et des options en fonction du texte de l'évènement
-          ParseEvent(infos.text, function (hue, options) {
-            switch (options.type) {
-              case 'awakening':
-                calendar.awakening(infos.date, function () {
-                  sails.log.verbose('CRON `awakening` defined on %s.', infos.date);
-                });
-                break;
 
-              case 'bedDown': // coated
-                sails.log.verbose('CRON `bedDown` defined on %s.', infos.date);
-                break;
+          var today = new Date();
+          if(today.getDate() == infos.date.getDate && today.getMonth() == infos.date.getMonth && today.getFullYear() == infos.date.getFullYear) {
 
-              case 'alarm':
-              default:
-                sails.log.verbose('CRON `alarm` defined on %s.', infos.date);
-                break;
+            // Modification dynamique de la couleur et des options en fonction du texte de l'évènement
+            ParseEvent(infos.text, function (hue, options) {
+              switch (options.type) {
+                case 'awakening':
+                  calendar.awakening(infos.date, function () {
+                    sails.log.verbose('CRON `awakening` defined on %s.', infos.date);
+                  });
+                  break;
 
-            }
-          });
+                case 'bedDown': // coated
+                  sails.log.verbose('CRON `bedDown` defined on %s.', infos.date);
+                  break;
+
+                case 'alarm':
+                default:
+                  sails.log.verbose('CRON `alarm` defined on %s.', infos.date);
+                  break;
+
+              }
+            });
+
+          }
+
         });
       });
     });
