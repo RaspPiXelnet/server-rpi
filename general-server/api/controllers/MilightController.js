@@ -210,7 +210,7 @@ module.exports = {
         sunset.setSeconds(sunset.getSeconds() - 5400);
         Weather.sunset(sunset, function (job) {
           var date = sunset.getDate() + '/' + (sunset.getMonth() + 1) + '/' + sunset.getFullYear() + ' ' + sunset.getHours() + ':' + sunset.getMinutes();
-          sails.log.verbose('CRON `sunset` defined to %d.', date);
+          sails.log.verbose('CRON `sunset` defined to %s.', date);
           res.json({message: 'Cron Force Weather !!!'});
         });
       }
