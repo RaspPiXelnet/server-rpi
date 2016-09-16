@@ -25,7 +25,7 @@ module.exports = {
     },
 
     color: {
-      type: 'integer'
+      type: 'string'
     }
 
   }
