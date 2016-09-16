@@ -11,7 +11,7 @@ var Weather = {
   sunset: function (date, cb) {
     CronService.addCron(date, function () {
       // on Tick
-      sails.log('Start CRON `sunset`.');
+      sails.log.verbose('Start CRON `sunset`.');
       MilightEffectService.init([
         {hue: '', brightness: '5', wait: '300000', type: 'brightness'},
         {hue: '', brightness: '10', wait: '300000', type: 'brightness'},
@@ -26,39 +26,9 @@ var Weather = {
       ], function () {
 
       });
-
-      /* Ancien fonctionnement */
-      /*MilightService.init(function (box) {
-       MilightService.on(box, 'all', function () {
-       setTimeout(function () {
-       MilightService.brightness(box, 'all', '20', function () {
-
-       // Programme que l'éclairage augmente en intensité 30 min après.
-       var newDateObj = new Date(date.getTime() + 1800000);
-       CronService(date, function () {
-       sails.log('Start CRON `sunset` (Increased intensity).');
-       MilightService.init(function (box) {
-       setTimeout(function () {
-       MilightService.brightness(box, 'all', '40', function () {
-
-       });
-       }, 500);
-       });
-       }, function () {
-       // on Complete
-       sails.log('Increase in light intensity.');
-       }, true, function () {
-       // then
-       });
-       // End: 30 min
-
-       });
-       }, 500);
-       });
-       });*/
     }, function () {
       // on Complete
-      sails.log('Lighting launched.');
+      sails.log.verbose('Operations of CRON `sunset` finished.');
     }, true, function (job) {
       // then
       cb(job);
@@ -67,10 +37,10 @@ var Weather = {
 };
 
 var calendar = {
-  reveil: function (date, cb) {
+  awakening: function (date, cb) {
     CronService.addCron(date, function () {
       // on Tick
-      sails.log('Start CRON `reveil`.');
+      sails.log.verbose('Start CRON `awakening`.');
       MilightEffectService.init([
         {hue: '', brightness: '5', wait: '180000', type: 'brightness'},
         {hue: '', brightness: '10', wait: '180000', type: 'brightness'},
@@ -87,11 +57,15 @@ var calendar = {
       });
     }, function () {
       // on Complete
-      sails.log('Lighting launched.');
+      sails.log.verbose('Operations of CRON `sunset` awakening.');
     }, true, function (job) {
       // then
       cb(job);
     });
+  },
+
+  bedDown: function (date, cb) {
+    cb();
   }
 };
 
@@ -100,60 +74,31 @@ module.exports = {
   init: function (req, res) {
     if (init == null) {
       // Définition d'une CRON qui va vérifier et récupérer les évènements Google pour la journée
-      /*CronService.addCron('12 00 00 * * *', function () {
-       // on Tick
-       sails.log('Start CRON `Google Agenda Service`.');
-       CalendarService.getItems(function (items) {
-       sails.log(items);
-       // Parcourir le tableau d'items
-       items.forEach(function (item) {
-       CalendarService.getInfos(item, function (infos) {
-       if(infos.err !== false) {
-       sails.log({message: "Ajout d'un évènement pour : (" + infos.date + ")."});
-       } else {
-       // Modification dynamique de la couleur et des options en fonction du texte de l'évènement
-       ParseEvent(infos.text, function (hue, options) {
-       CronService.addCronMilight(infos.date, hue, options, function () {
-       sails.log({message: "Ajout d'un évènement pour : (" + infos.date + ")."});
-       });
-       });
-       }
-       });
-       });
-       });
-       }, function () {
-       // on Complete
-       sails.log('Recovery of complete weather.');
-       }, true, function (job) {
-       // then
-       sails.log('Programming CRON `OpenWeatherMap Service - getCurrent` every day at 0:10.');
-       });*/
 
       // Définition d'une CRON qui va vérifier et récupérer les évènements Google toutes les 5 minutes
 
       // Définition d'une CRON qui va récupérer les informations de météo
       CronService.addCron('10 00 00 * * *', function () {
         // on Tick
-        sails.log('Start CRON `OpenWeatherMap Service - getCurrent`.');
+        sails.log.verbose('Start CRON `OpenWeatherMap Service - getCurrent`.');
         OpenWeatherMapService.getCurrent(function (weather) {
           if (weather.err) {
-            sails.log.error(new Error(weather.err));
-            sails.log.error(new Error(weather.httpResponse));
+            sails.log.error(new Error(weather.err, 'general-server/api/controllers/MilightController.js', 84), weather.httpResponse);
           } else {
             // On ajoute une CRON pour l'allumage de l'éclairage quand le soleil commence à se coucher
             var sunset = new Date(weather.data.sys.sunset * 1000);
             sunset.setSeconds(sunset.getSeconds() - 1800);
             Weather.sunset(sunset, function (job) {
-              sails.log('Programming CRON `sunset` to ' + sunset + '.');
+              sails.log.verbose('CRON `sunset` defined to %d.', infos.date);
             });
           }
         })
       }, function () {
         // on Complete
-        sails.log('Recovery of complete weather.');
+        sails.log.silly('Recovery of complete weather.');
       }, true, function (job) {
         // then
-        sails.log('Programming CRON `OpenWeatherMap Service - getCurrent` every day at 0:10.');
+        sails.log.verbose('CRON `OpenWeatherMap.getCurrent` defined to 0:10 am.');
       });
       // END CRON WEATHER
 
@@ -258,16 +203,15 @@ module.exports = {
   cronForceWeather: function (req, res) {
     OpenWeatherMapService.getCurrent(function (weather) {
       if (weather.err) {
-        sails.log.error(new Error(weather.err));
-        sails.log.error(new Error(weather.httpResponse));
+        sails.log.error(new Error(weather.err, 'general-server/api/controllers/MilightController.js', 204), weather.httpResponse);
       } else {
         // On ajoute une CRON pour l'allumage de l'éclairage quand le soleil commence à se coucher
         var sunset = new Date(weather.data.sys.sunset * 1000);
         sunset.setSeconds(sunset.getSeconds() - 5400);
         Weather.sunset(sunset, function (job) {
           var date = sunset.getDate() + '/' + (sunset.getMonth() + 1) + '/' + sunset.getFullYear() + ' ' + sunset.getHours() + ':' + sunset.getMinutes();
-          sails.log('Programming CRON `sunset` to ' + date + '.');
-          res.json({message: 'Cron Force Weather !!!'})
+          sails.log.verbose('CRON `sunset` defined to %d.', date);
+          res.json({message: 'Cron Force Weather !!!'});
         });
       }
     });
@@ -282,17 +226,21 @@ module.exports = {
           // Modification dynamique de la couleur et des options en fonction du texte de l'évènement
           ParseEvent(infos.text, function (hue, options) {
             switch (options.type) {
-              case 'reveil':
-                calendar.reveil(infos.date, function () {
-                  sails.log({message: "Ajout d'un évènement `Réveil` pour : (" + infos.date + ")."});
+              case 'awakening':
+                calendar.awakening(infos.date, function () {
+                  sails.log.verbose('CRON `awakening` defined to %d.', infos.date);
                 });
                 break;
-              case 'coucher':
-                sails.log({message: "Ajout d'un évènement `Coucher` pour : (" + infos.date + ")."});
+
+              case 'bedDown': // coated
+                sails.log.verbose('CRON `bedDown` defined to %d.', infos.date);
                 break;
+
+              case 'alarm':
               default:
-                sails.log({message: "Ajout d'un évènement `Défaut` pour : (" + infos.date + ")."});
+                sails.log.verbose('CRON `alarm` defined to %d.', infos.date);
                 break;
+
             }
 
 
