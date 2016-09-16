@@ -42,16 +42,16 @@ var calendar = {
       // on Tick
       sails.log.verbose('Start CRON `awakening`.');
       MilightEffectService.init([
-        {hue: '', brightness: '5', wait: '180000', type: 'brightness'},
-        {hue: '', brightness: '10', wait: '180000', type: 'brightness'},
-        {hue: '', brightness: '15', wait: '180000', type: 'brightness'},
-        {hue: '', brightness: '20', wait: '180000', type: 'brightness'},
-        {hue: '', brightness: '25', wait: '180000', type: 'brightness'},
-        {hue: '', brightness: '30', wait: '180000', type: 'brightness'},
-        {hue: '', brightness: '40', wait: '180000', type: 'brightness'},
-        {hue: '', brightness: '50', wait: '180000', type: 'brightness'},
-        {hue: '', brightness: '75', wait: '180000', type: 'brightness'},
-        {hue: '', brightness: '100', wait: '180000', type: 'brightness'}
+        {hue: '', brightness: '5', wait: '60000', type: 'brightness'},
+        {hue: '', brightness: '10', wait: '60000', type: 'brightness'},
+        {hue: '', brightness: '15', wait: '60000', type: 'brightness'},
+        {hue: '', brightness: '20', wait: '60000', type: 'brightness'},
+        {hue: '', brightness: '25', wait: '60000', type: 'brightness'},
+        {hue: '', brightness: '30', wait: '60000', type: 'brightness'},
+        {hue: '', brightness: '40', wait: '60000', type: 'brightness'},
+        {hue: '', brightness: '50', wait: '60000', type: 'brightness'},
+        {hue: '', brightness: '75', wait: '60000', type: 'brightness'},
+        {hue: '', brightness: '100', wait: '60000', type: 'brightness'}
       ], function () {
 
       });
@@ -68,6 +68,7 @@ var calendar = {
     CronService.addCron(date, function () {
       // on Tick
       sails.log.verbose('Start CRON `bedDown`.');
+      // Todo: Vérifier si la lumière est déjà alumée et à quelle intensité
       MilightEffectService.init([
         {hue: '', brightness: '50', wait: '60000', type: 'brightness'},
         {hue: '', brightness: '45', wait: '60000', type: 'brightness'},
