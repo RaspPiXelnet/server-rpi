@@ -225,7 +225,15 @@ module.exports = {
         CalendarService.getInfos(item, function (infos) {
 
           var today = new Date();
-          if(today.getDate() == infos.date.getDate && today.getMonth() == infos.date.getMonth && today.getFullYear() == infos.date.getFullYear) {
+
+          sails.log(today.getDate())
+          sails.log(infos.date.getDate())
+          sails.log(today.getMonth())
+          sails.log(infos.date.getMonth())
+          sails.log(today.getFullYear())
+          sails.log(infos.date.getFullYear())
+
+          if(today.getDate() == infos.date.getDate() && today.getMonth() == infos.date.getMonth() && today.getFullYear() == infos.date.getFullYear()) {
 
             // Modification dynamique de la couleur et des options en fonction du texte de l'évènement
             ParseEvent(infos.text, function (hue, options) {
