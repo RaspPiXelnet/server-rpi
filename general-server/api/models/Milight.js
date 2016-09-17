@@ -21,7 +21,7 @@ module.exports = {
     },
 
     brightness: {
-      type: 'integer'
+      type: 'string'
     },
 
     color: {

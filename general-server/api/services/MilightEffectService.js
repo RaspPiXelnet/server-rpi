@@ -24,6 +24,9 @@ var MilightEffect = {
       var wait = effect.wait;
       var type = effect.type;
 
+      // Récupère le dernier état de la lampe
+      Milight.findOne({}).sort('')
+
       // Ajoute en base l'état actuel de la lampe
       Milight.create({type: type, zone: 'all', brightness: parseInt(brightness), color: color}).exec(function (err, data){
         if (err) {
