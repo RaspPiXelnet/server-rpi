@@ -25,7 +25,7 @@ var MilightEffect = {
       var type = effect.type;
 
       // Récupère le dernier état de la lampe
-      Milight.findOne({}).sort('createdAt DESC').exec(function(err, lastEntry) {
+      Milight.find().sort('createdAt DESC').exec(function(err, lastEntry) {
         if (err) {
           sails.log.error(err);
         } else {
