@@ -25,51 +25,59 @@ var MilightEffect = {
       var type = effect.type;
 
       // Récupère le dernier état de la lampe
-      Milight.findOne({}).sort('')
-
-      // Ajoute en base l'état actuel de la lampe
-      Milight.create({type: type, zone: 'all', brightness: parseInt(brightness), color: color}).exec(function (err, data){
+      Milight.findOne({}).sort('createdAt DESC').exec(function(err, lastEntry) {
         if (err) {
           sails.log.error(err);
-        }
-        sails.log.verbose('New Milight entry.');
-        sails.log.silly(data);
-      });
+        } else {
+          sails.log.silly('Last entry milight: ', lastEntry);
 
-      switch(type) {
-        case 'color':
-          MilightService.color(box, 'all', color, function () {
-            setTimeout(function () {
-              // On exécute de nouveau la fonction
-              that.setEffect(box, cb);
-            }, wait);
+          // Ajoute en base l'état actuel de la lampe
+          Milight.create({type: type, zone: 'all', brightness: parseInt(brightness), color: color}).exec(function (err, data){
+            if (err) {
+              sails.log.error(err);
+            }
+            sails.log.verbose('New Milight entry.');
+            sails.log.silly(data);
           });
-          break;
-        case 'brightness':
-          MilightService.brightness(box, 'all', brightness, function () {
-            setTimeout(function () {
-              // On exécute de nouveau la fonction
-              that.setEffect(box, cb);
-            }, wait);
-          });
-          break;
-        case 'whiteMode':
-          MilightService.whiteMode(box, 'all', function () {
-            setTimeout(function () {
-              // On exécute de nouveau la fonction
-              that.setEffect(box, cb);
-            }, wait);
-          });
-          break;
-        case 'black':
-          MilightService.off(box, 'all', function () {
-            setTimeout(function () {
-              // On exécute de nouveau la fonction
-              that.setEffect(box, cb);
-            }, wait);
-          });
-          break;
-      }
+
+
+          switch(type) {
+            case 'color':
+              MilightService.color(box, 'all', color, function () {
+                setTimeout(function () {
+                  // On exécute de nouveau la fonction
+                  that.setEffect(box, cb);
+                }, wait);
+              });
+              break;
+            case 'brightness':
+              MilightService.brightness(box, 'all', brightness, function () {
+                setTimeout(function () {
+                  // On exécute de nouveau la fonction
+                  that.setEffect(box, cb);
+                }, wait);
+              });
+              break;
+            case 'whiteMode':
+              MilightService.whiteMode(box, 'all', function () {
+                setTimeout(function () {
+                  // On exécute de nouveau la fonction
+                  that.setEffect(box, cb);
+                }, wait);
+              });
+              break;
+            case 'black':
+              MilightService.off(box, 'all', function () {
+                setTimeout(function () {
+                  // On exécute de nouveau la fonction
+                  that.setEffect(box, cb);
+                }, wait);
+              });
+              break;
+          }
+
+        }
+      });
     } else {
       cb();
     }
