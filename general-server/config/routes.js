@@ -47,7 +47,7 @@ module.exports.routes = {
   ***************************************************************************/
 
   // Test
-
+  'GET /test': 'MilightController.test',
 
   // Milight
   'GET /milight/init': 'MilightController.init',

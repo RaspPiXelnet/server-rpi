@@ -376,7 +376,15 @@ module.exports = {
       });
     });
     return res.json({message: "Google Calendar events added."});
+  },
+
+  test: function (req, res) {
+    MilightEffectService.init([
+      {hue: '', brightness: '5', wait: '60000', type: 'brightness'},
+      {hue: '', brightness: '10', wait: '60000', type: 'brightness'}
+    ], function () {
+      res.json({test:true});
+    });
   }
 
-}
-;
+};
