@@ -76,49 +76,6 @@ var MilightEffect = {
           });
           break;
 
-        case 'lastEntry':
-          Milight.find().sort('createdAt DESC').limit(1).exec(function (err, lastEntry) {
-
-            switch (lastEntry.type) {
-              case 'color':
-                MilightService.color(box, 'all', lastEntry.color, function () {
-                  setTimeout(function () {
-                    // On exécute de nouveau la fonction
-                    that.setEffect(box, cb);
-                  }, wait);
-                });
-                break;
-
-              case 'brightness':
-                MilightService.brightness(box, 'all', lastEntry.brightness, function () {
-                  setTimeout(function () {
-                    // On exécute de nouveau la fonction
-                    that.setEffect(box, cb);
-                  }, wait);
-                });
-                break;
-
-              case 'whiteMode':
-                MilightService.whiteMode(box, 'all', function () {
-                  setTimeout(function () {
-                    // On exécute de nouveau la fonction
-                    that.setEffect(box, cb);
-                  }, wait);
-                });
-                break;
-
-              case 'black':
-                MilightService.off(box, 'all', function () {
-                  setTimeout(function () {
-                    // On exécute de nouveau la fonction
-                    that.setEffect(box, cb);
-                  }, wait);
-                });
-                break;
-            }
-
-          });
-          break;
       }
 
     } else {

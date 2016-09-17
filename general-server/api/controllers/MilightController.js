@@ -83,8 +83,7 @@ var effects = {
     {hue: '', brightness: '100', wait: '1000', type: 'brightness'},
     {hue: '', brightness: false, wait: '500', type: 'black'},
     {hue: '', brightness: '100', wait: '1000', type: 'brightness'},
-    {hue: '', brightness: false, wait: '100', type: 'black'},
-    {hue: '', brightness: false, wait: '100', type: 'lastEntry'}
+    {hue: '', brightness: false, wait: '100', type: 'black'}
   ]
 };
 
@@ -100,7 +99,7 @@ var Weather = {
         } else {
           sails.log.silly('Last entry milight: ', lastEntry);
 
-          if (!parseInt(lastEntry.brightness) > 0) {
+          if (!parseInt(lastEntry[0].brightness) > 0) {
             sails.log.verbose('Start CRON `sunset`.');
             MilightEffectService.init(effects.sunset, function () {
 
@@ -130,7 +129,7 @@ var calendar = {
           sails.log.error(err);
         } else {
           sails.log.silly('Last entry milight: ', lastEntry);
-          if (!parseInt(lastEntry.brightness) > 0) {
+          if (!parseInt(lastEntry[0].brightness) > 0) {
             sails.log.verbose('Start CRON `awakening`.');
             MilightEffectService.init(effects.awakening, function () {
 
@@ -157,10 +156,7 @@ var calendar = {
           sails.log.error(err);
         } else {
           sails.log.silly('Last entry milight: ', lastEntry);
-          sails.log(lastEntry.brightness);
-          sails.log(parseInt(lastEntry.brightness));
-          sails.log(parseInt(lastEntry.brightness) > 0);
-          if (parseInt(lastEntry.brightness) > 0) {
+          if (parseInt(lastEntry[0].brightness) > 0) {
             sails.log.verbose('Start CRON `bedDown`.');
             MilightEffectService.init(effects.bedDown1, function () {
 
