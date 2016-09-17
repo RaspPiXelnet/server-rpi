@@ -4,7 +4,6 @@ var Cron = {
   timeZone: 'Europe/Paris',
 
   addCron: function (date, actionStart, actionEnd, startNow, cb) {
-    sails.log(date);
     // Création de la CRON
     var job = new CronJob(date, actionStart, actionEnd, startNow, this.timeZone);
     cb(job);
@@ -12,9 +11,6 @@ var Cron = {
 
   addCronMilight: function (date, color, options, cb) {
     // Traitement des options
-    sails.log(date);
-    sails.log(color);
-    sails.log(options);
     var zone = 'all';
     if(typeof options.zone !== 'undefined') {
       zone = options.zone;
