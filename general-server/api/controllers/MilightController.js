@@ -11,21 +11,35 @@ var Weather = {
   sunset: function (date, cb) {
     CronService.addCron(date, function () {
       // on Tick
-      sails.log.verbose('Start CRON `sunset`.');
-      MilightEffectService.init([
-        {hue: '', brightness: '5', wait: '300000', type: 'brightness'},
-        {hue: '', brightness: '10', wait: '300000', type: 'brightness'},
-        {hue: '', brightness: '15', wait: '300000', type: 'brightness'},
-        {hue: '', brightness: '20', wait: '300000', type: 'brightness'},
-        {hue: '', brightness: '25', wait: '300000', type: 'brightness'},
-        {hue: '', brightness: '30', wait: '300000', type: 'brightness'},
-        {hue: '', brightness: '40', wait: '300000', type: 'brightness'},
-        {hue: '', brightness: '50', wait: '300000', type: 'brightness'},
-        {hue: '', brightness: '75', wait: '300000', type: 'brightness'},
-        {hue: '', brightness: '100', wait: '300000', type: 'brightness'}
-      ], function () {
 
-      });
+      // Récupère le dernier état de la lampe
+      Milight.find().sort('createdAt DESC').limit(1).exec(function (err, lastEntry) {
+        if (err) {
+          sails.log.error(err);
+        } else {
+          sails.log.silly('Last entry milight: ', lastEntry);
+
+          if (!parseInt(lastEntry.brightness) > 0) {
+            sails.log.verbose('Start CRON `sunset`.');
+            MilightEffectService.init([
+              {hue: '', brightness: '5', wait: '300000', type: 'brightness'},
+              {hue: '', brightness: '10', wait: '300000', type: 'brightness'},
+              {hue: '', brightness: '15', wait: '300000', type: 'brightness'},
+              {hue: '', brightness: '20', wait: '300000', type: 'brightness'},
+              {hue: '', brightness: '25', wait: '300000', type: 'brightness'},
+              {hue: '', brightness: '30', wait: '300000', type: 'brightness'},
+              {hue: '', brightness: '40', wait: '300000', type: 'brightness'},
+              {hue: '', brightness: '50', wait: '300000', type: 'brightness'},
+              {hue: '', brightness: '75', wait: '300000', type: 'brightness'},
+              {hue: '', brightness: '100', wait: '300000', type: 'brightness'}
+            ], function () {
+
+            });
+          }
+
+        }
+      }); // End Milight Query
+
     }, function () {
       // on Complete
       sails.log.verbose('Operations of CRON `sunset` finished.');
@@ -40,21 +54,34 @@ var calendar = {
   awakening: function (date, cb) {
     CronService.addCron(date, function () {
       // on Tick
-      sails.log.verbose('Start CRON `awakening`.');
-      MilightEffectService.init([
-        {hue: '', brightness: '5', wait: '60000', type: 'brightness'},
-        {hue: '', brightness: '10', wait: '60000', type: 'brightness'},
-        {hue: '', brightness: '15', wait: '60000', type: 'brightness'},
-        {hue: '', brightness: '20', wait: '60000', type: 'brightness'},
-        {hue: '', brightness: '25', wait: '60000', type: 'brightness'},
-        {hue: '', brightness: '30', wait: '60000', type: 'brightness'},
-        {hue: '', brightness: '40', wait: '60000', type: 'brightness'},
-        {hue: '', brightness: '50', wait: '60000', type: 'brightness'},
-        {hue: '', brightness: '75', wait: '60000', type: 'brightness'},
-        {hue: '', brightness: '100', wait: '60000', type: 'brightness'}
-      ], function () {
 
-      });
+      Milight.find().sort('createdAt DESC').limit(1).exec(function (err, lastEntry) {
+        if (err) {
+          sails.log.error(err);
+        } else {
+          sails.log.silly('Last entry milight: ', lastEntry);
+
+          if (!parseInt(lastEntry.brightness) > 0) {
+            sails.log.verbose('Start CRON `awakening`.');
+            MilightEffectService.init([
+              {hue: '', brightness: '5', wait: '60000', type: 'brightness'},
+              {hue: '', brightness: '10', wait: '60000', type: 'brightness'},
+              {hue: '', brightness: '15', wait: '60000', type: 'brightness'},
+              {hue: '', brightness: '20', wait: '60000', type: 'brightness'},
+              {hue: '', brightness: '25', wait: '60000', type: 'brightness'},
+              {hue: '', brightness: '30', wait: '60000', type: 'brightness'},
+              {hue: '', brightness: '40', wait: '60000', type: 'brightness'},
+              {hue: '', brightness: '50', wait: '60000', type: 'brightness'},
+              {hue: '', brightness: '75', wait: '60000', type: 'brightness'},
+              {hue: '', brightness: '100', wait: '60000', type: 'brightness'}
+            ], function () {
+
+            });
+          }
+
+        }
+      }); // End Milight Query
+
     }, function () {
       // on Complete
       sails.log.verbose('Operations of CRON `awakening` finished.');
@@ -67,23 +94,47 @@ var calendar = {
   bedDown: function (date, cb) {
     CronService.addCron(date, function () {
       // on Tick
-      sails.log.verbose('Start CRON `bedDown`.');
-      // Todo: Vérifier si la lumière est déjà alumée et à quelle intensité
-      MilightEffectService.init([
-        {hue: '', brightness: '50', wait: '60000', type: 'brightness'},
-        {hue: '', brightness: '45', wait: '60000', type: 'brightness'},
-        {hue: '', brightness: '40', wait: '60000', type: 'brightness'},
-        {hue: '', brightness: '35', wait: '60000', type: 'brightness'},
-        {hue: '', brightness: '30', wait: '60000', type: 'brightness'},
-        {hue: '', brightness: '25', wait: '60000', type: 'brightness'},
-        {hue: '', brightness: '20', wait: '60000', type: 'brightness'},
-        {hue: '', brightness: '15', wait: '60000', type: 'brightness'},
-        {hue: '', brightness: '10', wait: '60000', type: 'brightness'},
-        {hue: '', brightness: '5', wait: '60000', type: 'brightness'},
-        {hue: '', brightness: '0', wait: '60000', type: 'brightness'}
-      ], function () {
 
-      });
+      Milight.find().sort('createdAt DESC').limit(1).exec(function (err, lastEntry) {
+        if (err) {
+          sails.log.error(err);
+        } else {
+          sails.log.silly('Last entry milight: ', lastEntry);
+
+          if (parseInt(lastEntry.brightness) > 0) {
+            sails.log.verbose('Start CRON `bedDown`.');
+            MilightEffectService.init([
+              {hue: '', brightness: '50', wait: '60000', type: 'brightness'},
+              {hue: '', brightness: '45', wait: '60000', type: 'brightness'},
+              {hue: '', brightness: '40', wait: '60000', type: 'brightness'},
+              {hue: '', brightness: '35', wait: '60000', type: 'brightness'},
+              {hue: '', brightness: '30', wait: '60000', type: 'brightness'},
+              {hue: '', brightness: '25', wait: '60000', type: 'brightness'},
+              {hue: '', brightness: '20', wait: '60000', type: 'brightness'},
+              {hue: '', brightness: '15', wait: '60000', type: 'brightness'},
+              {hue: '', brightness: '10', wait: '60000', type: 'brightness'},
+              {hue: '', brightness: '5', wait: '60000', type: 'brightness'},
+              {hue: '', brightness: false, wait: '60000', type: 'black'}
+            ], function () {
+
+            });
+          } else {
+            sails.log.verbose('Start CRON `bedDown`.');
+            MilightEffectService.init([
+              {hue: '', brightness: '5', wait: '500', type: 'brightness'},
+              {hue: '', brightness: '10', wait: '500', type: 'brightness'},
+              {hue: '', brightness: '5', wait: '500', type: 'brightness'},
+              {hue: '', brightness: '10', wait: '500', type: 'brightness'},
+              {hue: '', brightness: '0', wait: '500', type: 'brightness'},
+              {hue: '', brightness: false, wait: '500', type: 'black'}
+            ], function () {
+
+            });
+          }
+
+        }
+      }); // End Milight Query
+
     }, function () {
       // on Complete
       sails.log.verbose('Operations of CRON `bedDown` finished.');
@@ -100,36 +151,36 @@ var calendar = {
       MilightEffectService.init([
         {hue: HueService.getHue('red'), brightness: '', wait: '100', type: 'color'},
         {hue: '', brightness: '100', wait: '1000', type: 'brightness'},
-        {hue: '', brightness: '', wait: '500', type: 'black'},
+        {hue: '', brightness: false, wait: '500', type: 'black'},
         {hue: '', brightness: '100', wait: '1000', type: 'brightness'},
-        {hue: '', brightness: '', wait: '500', type: 'black'},
+        {hue: '', brightness: false, wait: '500', type: 'black'},
         {hue: '', brightness: '100', wait: '1000', type: 'brightness'},
-        {hue: '', brightness: '', wait: '500', type: 'black'},
+        {hue: '', brightness: false, wait: '500', type: 'black'},
         {hue: '', brightness: '100', wait: '1000', type: 'brightness'},
-        {hue: '', brightness: '', wait: '500', type: 'black'},
+        {hue: '', brightness: false, wait: '500', type: 'black'},
         {hue: '', brightness: '100', wait: '1000', type: 'brightness'},
-        {hue: '', brightness: '', wait: '500', type: 'black'},
+        {hue: '', brightness: false, wait: '500', type: 'black'},
         {hue: '', brightness: '100', wait: '1000', type: 'brightness'},
-        {hue: '', brightness: '', wait: '500', type: 'black'},
+        {hue: '', brightness: false, wait: '500', type: 'black'},
         {hue: '', brightness: '100', wait: '1000', type: 'brightness'},
-        {hue: '', brightness: '', wait: '500', type: 'black'},
+        {hue: '', brightness: false, wait: '500', type: 'black'},
         {hue: '', brightness: '100', wait: '1000', type: 'brightness'},
-        {hue: '', brightness: '', wait: '500', type: 'black'},
+        {hue: '', brightness: false, wait: '500', type: 'black'},
         {hue: '', brightness: '100', wait: '1000', type: 'brightness'},
-        {hue: '', brightness: '', wait: '500', type: 'black'},
+        {hue: '', brightness: false, wait: '500', type: 'black'},
         {hue: '', brightness: '100', wait: '1000', type: 'brightness'},
-        {hue: '', brightness: '', wait: '500', type: 'black'},
+        {hue: '', brightness: false, wait: '500', type: 'black'},
         {hue: '', brightness: '100', wait: '1000', type: 'brightness'},
-        {hue: '', brightness: '', wait: '500', type: 'black'},
+        {hue: '', brightness: false, wait: '500', type: 'black'},
         {hue: '', brightness: '100', wait: '1000', type: 'brightness'},
-        {hue: '', brightness: '', wait: '500', type: 'black'},
+        {hue: '', brightness: false, wait: '500', type: 'black'},
         {hue: '', brightness: '100', wait: '1000', type: 'brightness'},
-        {hue: '', brightness: '', wait: '500', type: 'black'},
+        {hue: '', brightness: false, wait: '500', type: 'black'},
         {hue: '', brightness: '100', wait: '1000', type: 'brightness'},
-        {hue: '', brightness: '', wait: '500', type: 'black'},
+        {hue: '', brightness: false, wait: '500', type: 'black'},
         {hue: '', brightness: '100', wait: '1000', type: 'brightness'},
-        {hue: '', brightness: '', wait: '100', type: 'black'},
-        {hue: '', brightness: '', wait: '100', type: 'whiteMode'}
+        {hue: '', brightness: false, wait: '100', type: 'black'},
+        {hue: '', brightness: false, wait: '100', type: 'whiteMode'}
       ], function () {
 
       });
@@ -158,7 +209,7 @@ module.exports = {
             CalendarService.getInfos(item, function (infos) {
 
               var today = new Date();
-              if(today.getDate() == infos.date.getDate() && today.getMonth() == infos.date.getMonth() && today.getFullYear() == infos.date.getFullYear()) {
+              if (today.getDate() == infos.date.getDate() && today.getMonth() == infos.date.getMonth() && today.getFullYear() == infos.date.getFullYear()) {
                 // Définition des CRON en fonction du texte de l'évènement
                 ParseEvent(infos.text, function (hue, options) {
                   switch (options.type) {
@@ -344,7 +395,7 @@ module.exports = {
         CalendarService.getInfos(item, function (infos) {
 
           var today = new Date();
-          if(today.getDate() == infos.date.getDate() && today.getMonth() == infos.date.getMonth() && today.getFullYear() == infos.date.getFullYear()) {
+          if (today.getDate() == infos.date.getDate() && today.getMonth() == infos.date.getMonth() && today.getFullYear() == infos.date.getFullYear()) {
             // Définition des CRON en fonction du texte de l'évènement
             ParseEvent(infos.text, function (hue, options) {
               switch (options.type) {
@@ -383,7 +434,7 @@ module.exports = {
       {hue: '', brightness: '5', wait: '60000', type: 'brightness'},
       {hue: '', brightness: '10', wait: '60000', type: 'brightness'}
     ], function () {
-      res.json({test:true});
+      res.json({test: true});
     });
   }
 
