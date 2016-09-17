@@ -6,6 +6,87 @@
  */
 var init = null;
 
+var effects = {
+  sunset: [
+    {hue: '', brightness: '5', wait: '300000', type: 'brightness'},
+    {hue: '', brightness: '10', wait: '300000', type: 'brightness'},
+    {hue: '', brightness: '15', wait: '300000', type: 'brightness'},
+    {hue: '', brightness: '20', wait: '300000', type: 'brightness'},
+    {hue: '', brightness: '25', wait: '300000', type: 'brightness'},
+    {hue: '', brightness: '30', wait: '300000', type: 'brightness'},
+    {hue: '', brightness: '40', wait: '300000', type: 'brightness'},
+    {hue: '', brightness: '50', wait: '300000', type: 'brightness'},
+    {hue: '', brightness: '75', wait: '300000', type: 'brightness'},
+    {hue: '', brightness: '100', wait: '300000', type: 'brightness'}
+  ],
+  awakening: [
+    {hue: '', brightness: '5', wait: '60000', type: 'brightness'},
+    {hue: '', brightness: '10', wait: '60000', type: 'brightness'},
+    {hue: '', brightness: '15', wait: '60000', type: 'brightness'},
+    {hue: '', brightness: '20', wait: '60000', type: 'brightness'},
+    {hue: '', brightness: '25', wait: '60000', type: 'brightness'},
+    {hue: '', brightness: '30', wait: '60000', type: 'brightness'},
+    {hue: '', brightness: '40', wait: '60000', type: 'brightness'},
+    {hue: '', brightness: '50', wait: '60000', type: 'brightness'},
+    {hue: '', brightness: '75', wait: '60000', type: 'brightness'},
+    {hue: '', brightness: '100', wait: '60000', type: 'brightness'}
+  ],
+  bedDown1: [
+    {hue: '', brightness: '50', wait: '60000', type: 'brightness'},
+    {hue: '', brightness: '45', wait: '60000', type: 'brightness'},
+    {hue: '', brightness: '40', wait: '60000', type: 'brightness'},
+    {hue: '', brightness: '35', wait: '60000', type: 'brightness'},
+    {hue: '', brightness: '30', wait: '60000', type: 'brightness'},
+    {hue: '', brightness: '25', wait: '60000', type: 'brightness'},
+    {hue: '', brightness: '20', wait: '60000', type: 'brightness'},
+    {hue: '', brightness: '15', wait: '60000', type: 'brightness'},
+    {hue: '', brightness: '10', wait: '60000', type: 'brightness'},
+    {hue: '', brightness: '5', wait: '60000', type: 'brightness'},
+    {hue: '', brightness: false, wait: '60000', type: 'black'}
+  ],
+  bedDown2: [
+    {hue: '', brightness: '5', wait: '500', type: 'brightness'},
+    {hue: '', brightness: '10', wait: '500', type: 'brightness'},
+    {hue: '', brightness: '5', wait: '500', type: 'brightness'},
+    {hue: '', brightness: '10', wait: '500', type: 'brightness'},
+    {hue: '', brightness: '0', wait: '500', type: 'brightness'},
+    {hue: '', brightness: false, wait: '500', type: 'black'}
+  ],
+  alarm: [
+    {hue: HueService.getHue('red'), brightness: '', wait: '100', type: 'color'},
+    {hue: '', brightness: '100', wait: '1000', type: 'brightness'},
+    {hue: '', brightness: false, wait: '500', type: 'black'},
+    {hue: '', brightness: '100', wait: '1000', type: 'brightness'},
+    {hue: '', brightness: false, wait: '500', type: 'black'},
+    {hue: '', brightness: '100', wait: '1000', type: 'brightness'},
+    {hue: '', brightness: false, wait: '500', type: 'black'},
+    {hue: '', brightness: '100', wait: '1000', type: 'brightness'},
+    {hue: '', brightness: false, wait: '500', type: 'black'},
+    {hue: '', brightness: '100', wait: '1000', type: 'brightness'},
+    {hue: '', brightness: false, wait: '500', type: 'black'},
+    {hue: '', brightness: '100', wait: '1000', type: 'brightness'},
+    {hue: '', brightness: false, wait: '500', type: 'black'},
+    {hue: '', brightness: '100', wait: '1000', type: 'brightness'},
+    {hue: '', brightness: false, wait: '500', type: 'black'},
+    {hue: '', brightness: '100', wait: '1000', type: 'brightness'},
+    {hue: '', brightness: false, wait: '500', type: 'black'},
+    {hue: '', brightness: '100', wait: '1000', type: 'brightness'},
+    {hue: '', brightness: false, wait: '500', type: 'black'},
+    {hue: '', brightness: '100', wait: '1000', type: 'brightness'},
+    {hue: '', brightness: false, wait: '500', type: 'black'},
+    {hue: '', brightness: '100', wait: '1000', type: 'brightness'},
+    {hue: '', brightness: false, wait: '500', type: 'black'},
+    {hue: '', brightness: '100', wait: '1000', type: 'brightness'},
+    {hue: '', brightness: false, wait: '500', type: 'black'},
+    {hue: '', brightness: '100', wait: '1000', type: 'brightness'},
+    {hue: '', brightness: false, wait: '500', type: 'black'},
+    {hue: '', brightness: '100', wait: '1000', type: 'brightness'},
+    {hue: '', brightness: false, wait: '500', type: 'black'},
+    {hue: '', brightness: '100', wait: '1000', type: 'brightness'},
+    {hue: '', brightness: false, wait: '100', type: 'black'},
+    {hue: '', brightness: false, wait: '100', type: 'lastEntry'}
+  ]
+};
 
 var Weather = {
   sunset: function (date, cb) {
@@ -21,18 +102,7 @@ var Weather = {
 
           if (!parseInt(lastEntry.brightness) > 0) {
             sails.log.verbose('Start CRON `sunset`.');
-            MilightEffectService.init([
-              {hue: '', brightness: '5', wait: '300000', type: 'brightness'},
-              {hue: '', brightness: '10', wait: '300000', type: 'brightness'},
-              {hue: '', brightness: '15', wait: '300000', type: 'brightness'},
-              {hue: '', brightness: '20', wait: '300000', type: 'brightness'},
-              {hue: '', brightness: '25', wait: '300000', type: 'brightness'},
-              {hue: '', brightness: '30', wait: '300000', type: 'brightness'},
-              {hue: '', brightness: '40', wait: '300000', type: 'brightness'},
-              {hue: '', brightness: '50', wait: '300000', type: 'brightness'},
-              {hue: '', brightness: '75', wait: '300000', type: 'brightness'},
-              {hue: '', brightness: '100', wait: '300000', type: 'brightness'}
-            ], function () {
+            MilightEffectService.init(effects.sunset, function () {
 
             });
           }
@@ -60,25 +130,12 @@ var calendar = {
           sails.log.error(err);
         } else {
           sails.log.silly('Last entry milight: ', lastEntry);
-
           if (!parseInt(lastEntry.brightness) > 0) {
             sails.log.verbose('Start CRON `awakening`.');
-            MilightEffectService.init([
-              {hue: '', brightness: '5', wait: '60000', type: 'brightness'},
-              {hue: '', brightness: '10', wait: '60000', type: 'brightness'},
-              {hue: '', brightness: '15', wait: '60000', type: 'brightness'},
-              {hue: '', brightness: '20', wait: '60000', type: 'brightness'},
-              {hue: '', brightness: '25', wait: '60000', type: 'brightness'},
-              {hue: '', brightness: '30', wait: '60000', type: 'brightness'},
-              {hue: '', brightness: '40', wait: '60000', type: 'brightness'},
-              {hue: '', brightness: '50', wait: '60000', type: 'brightness'},
-              {hue: '', brightness: '75', wait: '60000', type: 'brightness'},
-              {hue: '', brightness: '100', wait: '60000', type: 'brightness'}
-            ], function () {
+            MilightEffectService.init(effects.awakening, function () {
 
             });
           }
-
         }
       }); // End Milight Query
 
@@ -100,38 +157,20 @@ var calendar = {
           sails.log.error(err);
         } else {
           sails.log.silly('Last entry milight: ', lastEntry);
-
+          sails.log(lastEntry.brightness);
+          sails.log(parseInt(lastEntry.brightness));
+          sails.log(parseInt(lastEntry.brightness) > 0);
           if (parseInt(lastEntry.brightness) > 0) {
             sails.log.verbose('Start CRON `bedDown`.');
-            MilightEffectService.init([
-              {hue: '', brightness: '50', wait: '60000', type: 'brightness'},
-              {hue: '', brightness: '45', wait: '60000', type: 'brightness'},
-              {hue: '', brightness: '40', wait: '60000', type: 'brightness'},
-              {hue: '', brightness: '35', wait: '60000', type: 'brightness'},
-              {hue: '', brightness: '30', wait: '60000', type: 'brightness'},
-              {hue: '', brightness: '25', wait: '60000', type: 'brightness'},
-              {hue: '', brightness: '20', wait: '60000', type: 'brightness'},
-              {hue: '', brightness: '15', wait: '60000', type: 'brightness'},
-              {hue: '', brightness: '10', wait: '60000', type: 'brightness'},
-              {hue: '', brightness: '5', wait: '60000', type: 'brightness'},
-              {hue: '', brightness: false, wait: '60000', type: 'black'}
-            ], function () {
+            MilightEffectService.init(effects.bedDown1, function () {
 
             });
           } else {
             sails.log.verbose('Start CRON `bedDown`.');
-            MilightEffectService.init([
-              {hue: '', brightness: '5', wait: '500', type: 'brightness'},
-              {hue: '', brightness: '10', wait: '500', type: 'brightness'},
-              {hue: '', brightness: '5', wait: '500', type: 'brightness'},
-              {hue: '', brightness: '10', wait: '500', type: 'brightness'},
-              {hue: '', brightness: '0', wait: '500', type: 'brightness'},
-              {hue: '', brightness: false, wait: '500', type: 'black'}
-            ], function () {
+            MilightEffectService.init(effects.bedDown2, function () {
 
             });
           }
-
         }
       }); // End Milight Query
 
@@ -148,40 +187,7 @@ var calendar = {
     CronService.addCron(date, function () {
       // on Tick
       sails.log.verbose('Start CRON `alarm`.');
-      MilightEffectService.init([
-        {hue: HueService.getHue('red'), brightness: '', wait: '100', type: 'color'},
-        {hue: '', brightness: '100', wait: '1000', type: 'brightness'},
-        {hue: '', brightness: false, wait: '500', type: 'black'},
-        {hue: '', brightness: '100', wait: '1000', type: 'brightness'},
-        {hue: '', brightness: false, wait: '500', type: 'black'},
-        {hue: '', brightness: '100', wait: '1000', type: 'brightness'},
-        {hue: '', brightness: false, wait: '500', type: 'black'},
-        {hue: '', brightness: '100', wait: '1000', type: 'brightness'},
-        {hue: '', brightness: false, wait: '500', type: 'black'},
-        {hue: '', brightness: '100', wait: '1000', type: 'brightness'},
-        {hue: '', brightness: false, wait: '500', type: 'black'},
-        {hue: '', brightness: '100', wait: '1000', type: 'brightness'},
-        {hue: '', brightness: false, wait: '500', type: 'black'},
-        {hue: '', brightness: '100', wait: '1000', type: 'brightness'},
-        {hue: '', brightness: false, wait: '500', type: 'black'},
-        {hue: '', brightness: '100', wait: '1000', type: 'brightness'},
-        {hue: '', brightness: false, wait: '500', type: 'black'},
-        {hue: '', brightness: '100', wait: '1000', type: 'brightness'},
-        {hue: '', brightness: false, wait: '500', type: 'black'},
-        {hue: '', brightness: '100', wait: '1000', type: 'brightness'},
-        {hue: '', brightness: false, wait: '500', type: 'black'},
-        {hue: '', brightness: '100', wait: '1000', type: 'brightness'},
-        {hue: '', brightness: false, wait: '500', type: 'black'},
-        {hue: '', brightness: '100', wait: '1000', type: 'brightness'},
-        {hue: '', brightness: false, wait: '500', type: 'black'},
-        {hue: '', brightness: '100', wait: '1000', type: 'brightness'},
-        {hue: '', brightness: false, wait: '500', type: 'black'},
-        {hue: '', brightness: '100', wait: '1000', type: 'brightness'},
-        {hue: '', brightness: false, wait: '500', type: 'black'},
-        {hue: '', brightness: '100', wait: '1000', type: 'brightness'},
-        {hue: '', brightness: false, wait: '100', type: 'black'},
-        {hue: '', brightness: false, wait: '100', type: 'whiteMode'}
-      ], function () {
+      MilightEffectService.init(effects.alarm, function () {
 
       });
     }, function () {
